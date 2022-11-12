@@ -1,0 +1,36 @@
+{
+  "name": "6wrnibot-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "test": "ts-node src/index.ts",
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "engine": { "node": "v16.14.2", "npm": "7.20.6"},
+  "keywords": [],
+  "author": "",
+  "engines": {
+    "node": "v16.14.2",
+    "npm": "7.20.6"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.6.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "glob": "^8.0.3",
+    "mongoose": "^6.7.2",
+    "sqlite3": "^5.1.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.14",
+    "@types/glob": "^8.0.0",
+    "@types/node": "^18.11.0",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.8.4"
+  }
+}
