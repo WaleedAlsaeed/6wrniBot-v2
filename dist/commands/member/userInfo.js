@@ -20,7 +20,7 @@ function mSecToSec(ms) {
 exports.default = new Command_1.Command({
     name: "userinfo",
     description: "عرض معلومات العضو",
-    onlyInCommandChannel: true,
+    onlyInCommandChannel: false,
     options: [
         {
             name: "member",
@@ -34,6 +34,10 @@ exports.default = new Command_1.Command({
         let user = interaction.options.getUser("member");
         if (!user)
             user = interaction.member.user;
+        if (!index_1.config.isModOrOwner(interaction.member))
+            if (interaction.channelId != index_1.config.COMMANDS_CHANNEL) {
+                return yield interaction.followUp(`يمكنك استخدام هذا الأمر فقط في قناة ${channelMention(index_1.config.COMMANDS_CHANNEL)}`);
+            }
         const member = yield ((_a = interaction.guild) === null || _a === void 0 ? void 0 : _a.members.fetch(user.id));
         if (!member) {
             yield interaction.followUp({ content: "العضو المحدد غير موجود بالسيرفر", ephemeral: true });
@@ -42,7 +46,11 @@ exports.default = new Command_1.Command({
         const embed = new discord_js_1.EmbedBuilder()
             .setThumbnail(user.displayAvatarURL())
             .setColor(index_1.config.DEFAULT_COLOR)
-            .addFields({ name: "الإسم:", value: `${user.tag}` }, { name: "id:", value: `${user.id}` }, { name: "تاريخ إنشاء الحساب:", value: `<t:${mSecToSec(member.user.createdTimestamp)}:f> (<t:${mSecToSec(member.user.createdTimestamp)}:R>)` }, { name: "تاريخ الإنضمام:", value: `<t:${mSecToSec(member.joinedTimestamp)}:f> (<t:${mSecToSec(member.joinedTimestamp)}:R>)` });
+            .addFields({ name: "الإسم:", value: `${user.tag}` }, { name: "id:", value: `${user.id}` }, { name: "تاريخ إنشاء الحساب:", value: `<t:${mSecToSec(member.user.createdTimestamp)}:f> (<t:${mSecToSec(member.user.createdTimestamp)}:R>)` }, { name: "تاريخ الإنضمام:", value: `<t:${mSecToSec(member.joinedTimestamp)}:f> (<t:${mSecToSec(member.joinedTimestamp)}:R>)` })
+            .setFooter({ iconURL: interaction.member.displayAvatarURL(), text: interaction.user.tag });
         yield interaction.followUp({ embeds: [embed] });
     }),
 });
+function channelMention(COMMANDS_CHANNEL) {
+    throw new Error('Function not implemented.');
+}

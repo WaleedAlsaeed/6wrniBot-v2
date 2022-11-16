@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, EmbedBuilder, User, userMention } from 'discord.js';
 import { Command } from '../../structures/Command';
-import { lvlsys, config } from '../../index';
+import { config } from '../../index';
 
 function mSecToSec(ms: number | null) {
     if (!ms)
@@ -11,7 +11,7 @@ function mSecToSec(ms: number | null) {
 export default new Command({
     name: "userinfo",
     description: "عرض معلومات العضو",
-    onlyInCommandChannel: true,
+    onlyInCommandChannel: false,
     options: [
         {
             name: "member",
@@ -24,7 +24,11 @@ export default new Command({
 
         let user = interaction.options.getUser("member");
         if (!user) user = interaction.member.user;
-        
+
+        if (!config.isModOrOwner(interaction.member))
+            if (interaction.channelId != config.COMMANDS_CHANNEL) {
+                return await interaction.followUp(`يمكنك استخدام هذا الأمر فقط في قناة ${channelMention(config.COMMANDS_CHANNEL)}`);
+            }
         const member = await interaction.guild?.members.fetch(user.id);
 
         if(!member) {
@@ -40,9 +44,14 @@ export default new Command({
             { name: "id:",  value: `${user.id}`},
             { name: "تاريخ إنشاء الحساب:",  value: `<t:${mSecToSec(member.user.createdTimestamp)}:f> (<t:${mSecToSec(member.user.createdTimestamp)}:R>)`},
             { name: "تاريخ الإنضمام:",  value: `<t:${mSecToSec(member.joinedTimestamp)}:f> (<t:${mSecToSec(member.joinedTimestamp)}:R>)`},
-        );
+        )
+        .setFooter({ iconURL: interaction.member.displayAvatarURL(), text: interaction.user.tag})
 
         await interaction.followUp({ embeds: [embed]});
 
     },
 })
+
+function channelMention(COMMANDS_CHANNEL: string) {
+    throw new Error('Function not implemented.');
+}
