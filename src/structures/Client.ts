@@ -12,7 +12,7 @@ import { Event, DataBaseEvent } from './Event';
 import fs from 'fs';
 import { connect, connection } from 'mongoose';
 import { RoleButton } from './Button';
-import { client, lvlsys } from '../index';
+import { client, lvlsys, config } from '../index';
 
 
 export class ExtendedClient extends Client {
@@ -126,6 +126,7 @@ export class ExtendedClient extends Client {
                     await event.run(...args);
                 } catch (error) {
                     console.log(error);
+                    config.LogChannel(`[Event Error]\n**Event:** ${event.event}\n**Error:**\n${error}`)
                 }
             });
             console.log(`Event "${event.event}" is loded`);

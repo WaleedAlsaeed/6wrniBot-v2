@@ -39,6 +39,7 @@ exports.ExtendedClient = void 0;
 const discord_js_1 = require("discord.js");
 const fs_1 = __importDefault(require("fs"));
 const mongoose_1 = require("mongoose");
+const index_1 = require("../index");
 class ExtendedClient extends discord_js_1.Client {
     constructor() {
         super({
@@ -153,6 +154,7 @@ class ExtendedClient extends discord_js_1.Client {
                     }
                     catch (error) {
                         console.log(error);
+                        index_1.config.LogChannel(`[Event Error]\n**Event:** ${event.event}\n**Error:**\n${error}`);
                     }
                 }));
                 console.log(`Event "${event.event}" is loded`);
