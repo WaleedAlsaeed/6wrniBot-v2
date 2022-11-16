@@ -95,7 +95,14 @@ class ExtendedClient extends discord_js_1.Client {
     }
     registerModules() {
         return __awaiter(this, void 0, void 0, function* () {
-            //* Register Commands
+            yield this.loadCommands();
+            yield this.loadComponents();
+            yield this.loadEvents();
+            yield this.loadDataBaseEvents();
+        });
+    }
+    loadCommands() {
+        return __awaiter(this, void 0, void 0, function* () {
             const slashCommands = [];
             const commandFolders = fs_1.default.readdirSync("./src/commands");
             for (const folder of commandFolders) {
@@ -108,6 +115,17 @@ class ExtendedClient extends discord_js_1.Client {
                 }));
                 console.log(`"${folder}" commands are loded`);
             }
+            this.on("ready", () => __awaiter(this, void 0, void 0, function* () {
+                this.registerCommands({
+                    commands: slashCommands,
+                    guildId: process.env.GUILDID
+                });
+                console.log("Bot is Online!");
+            }));
+        });
+    }
+    loadComponents() {
+        return __awaiter(this, void 0, void 0, function* () {
             const componentsFolders = fs_1.default.readdirSync("./src/components");
             for (const folder of componentsFolders) {
                 switch (folder) {
@@ -122,14 +140,10 @@ class ExtendedClient extends discord_js_1.Client {
                 }
                 console.log(`"${folder}" components are loded`);
             }
-            this.on("ready", () => {
-                this.registerCommands({
-                    commands: slashCommands,
-                    guildId: process.env.guildId
-                });
-                console.log("Bot is Online!");
-            });
-            //* Events
+        });
+    }
+    loadEvents() {
+        return __awaiter(this, void 0, void 0, function* () {
             const eventFiles = fs_1.default.readdirSync(`./src/events`);
             eventFiles.forEach((file) => __awaiter(this, void 0, void 0, function* () {
                 const event = yield this.importFile(`../events/${file.replace(".ts", "")}`);
@@ -143,7 +157,10 @@ class ExtendedClient extends discord_js_1.Client {
                 }));
                 console.log(`Event "${event.event}" is loded`);
             }));
-            //* DataBase Events
+        });
+    }
+    loadDataBaseEvents() {
+        return __awaiter(this, void 0, void 0, function* () {
             const dbeventFiles = fs_1.default.readdirSync(`./src/database`);
             dbeventFiles.forEach((file) => __awaiter(this, void 0, void 0, function* () {
                 const event = yield this.importFile(`../database/${file.replace(".ts", "")}`);

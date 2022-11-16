@@ -38,6 +38,9 @@ export default new Event(
 
         const welcome = client.channels.cache.get(config.WELCOME_CHANNEL) as TextBasedChannel;
         welcome.send({ content: welcomeMessage });
+
+        const role = member.guild.roles.cache.get("731608244606337076");
+        if (role && !member.roles.cache.get(role.id)) member.roles.add(role);
     }
 
 );

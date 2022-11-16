@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, EmbedBuilder, User, userMention } from 'discord.js';
+import { ApplicationCommandOptionType, EmbedBuilder } from 'discord.js';
 import { Command } from '../../structures/Command';
 import { lvlsys, config } from '../../index';
 
@@ -16,35 +16,25 @@ export default new Command({
         }
     ],
     run: async ({ interaction }) => {
-
         let user = interaction.options.getUser("member");
         
         if (!user) user = interaction.member.user;
-        
+        const highestRoleColor = (await interaction.guild?.members.fetch(user.id))?.roles.highest.color;
         const totalXp = await lvlsys.GetMemberXp(user.id);
-        let xpInLvl = Number(totalXp);
-        for (let i = 1; i < 1000; i++) {
-            let requiredlvlxp = i * 100;
-            if (totalXp <= requiredlvlxp) {
-                xpInLvl -= ((i - 1) * 100);
+        const lvl = await lvlsys.MemberLvl(user.id);
+        let requiredlvlxp = ((lvl - 1) * lvl) * 50;
 
-                const embed = new EmbedBuilder()
-                .setThumbnail(user.displayAvatarURL())
-                .setColor(config.DEFAULT_COLOR)
-                .setTitle(`[مستوى] - ${user.username}`)
-                .addFields(
-                    { name: "مجموع النقاط:", value: `${totalXp}`},
-                    { name: "النقاط:", value: `${xpInLvl}/${requiredlvlxp}`},
-                    { name: "المستوى:", value: `${i}`},
-                    { name: "الترتيب:", value: `${await lvlsys.MemberRank(user.id)}`}
-                )
-
-                await interaction.followUp({embeds: [embed]});
-                break;
-            }
-        }
-        
-        
+        const embed = new EmbedBuilder()
+        .setThumbnail(user.displayAvatarURL())
+        .setColor(highestRoleColor || config.DEFAULT_COLOR)
+        .setTitle(`[مستوى] - ${user.username}`)
+        .addFields(
+            { name: "مجموع النقاط:", value: `${totalXp}`},
+            { name: "المستوى:", value: `${lvl}`},
+            { name: "النقاط:", value: `${totalXp - requiredlvlxp}/${lvl * 100}`},
+            { name: "الترتيب:", value: `${await lvlsys.MemberRank(user.id)}`}
+        )
+        await interaction.followUp({embeds: [embed]});
 
     },
 })

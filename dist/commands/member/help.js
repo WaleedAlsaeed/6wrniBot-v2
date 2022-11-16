@@ -62,7 +62,7 @@ exports.default = new Command_1.Command({
                     return;
                 embed.addFields({
                     name: `/${command.name}`, value: `${command.description}
-                        \n\n------------------------------\n`
+                        \n------------------------------\n`
                 });
             }
             embeds.push(embed);

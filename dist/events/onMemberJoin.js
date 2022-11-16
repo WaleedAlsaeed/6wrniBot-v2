@@ -38,4 +38,7 @@ exports.default = new Event_1.Event(discord_js_1.Events.GuildMemberAdd, (member)
     welcomeMessage += `والإطلاع على ${(0, discord_js_1.channelMention)(index_1.config.ALL_CHANNELS)} للتعرف على أقسام السيرفر`;
     const welcome = index_1.client.channels.cache.get(index_1.config.WELCOME_CHANNEL);
     welcome.send({ content: welcomeMessage });
+    const role = member.guild.roles.cache.get("731608244606337076");
+    if (role && !member.roles.cache.get(role.id))
+        member.roles.add(role);
 }));

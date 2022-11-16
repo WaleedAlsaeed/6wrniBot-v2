@@ -36,56 +36,66 @@ export default new Command({
             await interaction.followUp("يتم العمل على ذلك");
 
             const unity: ButtonBuilder = new ButtonBuilder()
+                .setEmoji({ id: "1027944372353892452" })
                 .setCustomId("unity")
                 .setLabel("Unity Dev")
                 .setStyle(2);
 
             const unreal: ButtonBuilder = new ButtonBuilder()
+                .setEmoji({ id: "780024117637152769" })
                 .setCustomId("unreal")
                 .setLabel("Unreal Dev")
                 .setStyle(2);
 
             const godot: ButtonBuilder = new ButtonBuilder()
+                .setEmoji({ id: "780024321040449556" })
                 .setCustomId("godot")
                 .setLabel("Godot Dev")
                 .setStyle(2);
 
             const gamemaker: ButtonBuilder = new ButtonBuilder()
+                .setEmoji({ id: "780024651187355678" })
                 .setCustomId("gamemaker")
                 .setLabel("Gamemaker Dev")
                 .setStyle(2);
 
             const blender: ButtonBuilder = new ButtonBuilder()
+                .setEmoji({ id: "780024507867987988" })
                 .setCustomId("blender")
                 .setLabel("Blender")
                 .setStyle(2);
 
             const threeD: ButtonBuilder = new ButtonBuilder()
+                .setEmoji({ id: "780025103709765704" })
                 .setCustomId("threeD")
                 .setLabel("3D Artist")
                 .setStyle(2);
 
             const twoD: ButtonBuilder = new ButtonBuilder()
+                .setEmoji({ id: "780025147268530187" })
                 .setCustomId("twoD")
                 .setLabel("2D Artist")
                 .setStyle(2);
 
             const sound: ButtonBuilder = new ButtonBuilder()
+                .setEmoji({ id: "780025496859181106" })
                 .setCustomId("sound")
                 .setLabel("Sound Compositor")
                 .setStyle(2);
 
             const meetings: ButtonBuilder = new ButtonBuilder()
+                .setEmoji("📢")
                 .setCustomId("meetings")
                 .setLabel("اشعار الاجتماعات")
                 .setStyle(2);
             const gamejam: ButtonBuilder = new ButtonBuilder()
+                .setEmoji({ id: "747789192238596137" })
                 .setCustomId("gamejam")
                 .setLabel("اشعار المسابقات")
                 .setStyle(2);
             
 
-            await chnl.send({
+            return await chnl.send({
                 content: content,
                 components: [
                     new ActionRowBuilder<ButtonBuilder>().addComponents([

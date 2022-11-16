@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const Command_1 = require("../../structures/Command");
 const index_1 = require("../../index");
-const consts_1 = require("../../config/consts");
 exports.default = new Command_1.Command({
     name: "unban",
     description: "رفع الحظر عن عضو. للمشرفين فقط",
@@ -33,8 +32,7 @@ exports.default = new Command_1.Command({
     ],
     run: ({ interaction }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b, _c, _d;
-        const config = new consts_1.Config();
-        if (!config.isModOrOwner(interaction.member)) {
+        if (!index_1.config.isModOrOwner(interaction.member)) {
             yield interaction.reply({ content: "ليس لديك صلاحية استخدام الأمر!" });
             return;
         }
@@ -46,14 +44,14 @@ exports.default = new Command_1.Command({
         }
         yield ((_d = interaction.guild) === null || _d === void 0 ? void 0 : _d.members.unban(user.id, reason).catch(console.error));
         const embed = new discord_js_1.EmbedBuilder()
-            .setColor(config.DEFAULT_COLOR)
+            .setColor(index_1.config.DEFAULT_COLOR)
             .setTitle("🛑[حظر عضو]🛑")
             .setDescription(`تم حظر ${(0, discord_js_1.userMention)(user.id)}`)
             .addFields({ name: "السبب", value: reason })
             .setFooter({ text: `${interaction.user.tag} | ${interaction.createdAt}`, iconURL: interaction.user.displayAvatarURL() });
         ;
         yield interaction.followUp({ embeds: [embed] });
-        const modLog = index_1.client.channels.cache.get(config.MOD_LOG);
+        const modLog = index_1.client.channels.cache.get(index_1.config.MOD_LOG);
         if (modLog === null || modLog === void 0 ? void 0 : modLog.isTextBased())
             modLog.send({ embeds: [embed] });
     }),

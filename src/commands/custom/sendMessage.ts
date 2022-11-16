@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, EmbedBuilder, User, userMention, ChannelType, TextBasedChannel, TextBasedChannelMixin } from 'discord.js';
+import { ApplicationCommandOptionType, EmbedBuilder } from 'discord.js';
 import { Command } from '../../structures/Command';
 import { client, config } from '../../index';
 

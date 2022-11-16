@@ -2,6 +2,12 @@ import { EmbedBuilder, Message, PartialMessage, TextBasedChannel, userMention, E
 import { Event } from "../structures/Event"
 import { client, config } from '../index';
 
+const mSecToSec = (ms: number | null) => {
+    if (!ms)
+        return 0;
+    return Math.trunc(ms / 1000);
+}
+
 export default new Event(
     Events.MessageDelete,
     async (message: Message<boolean> | PartialMessage) => {
@@ -16,7 +22,7 @@ export default new Event(
             .setDescription(`حذف ${userMention(message.member.id)} رسالة في ${message.channel.toString()}`)
             .setColor(config.DEFAULT_COLOR)
             .addFields(
-                { name: "تاريخ الإرسال:", value: `<t:${message.createdTimestamp}:f>`},
+                { name: "تاريخ الإرسال:", value: `<t:${mSecToSec(message.createdTimestamp)}:f>`},
                 { name: "المحتوى:", value: message.content }
             );
 

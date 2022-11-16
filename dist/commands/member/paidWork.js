@@ -66,7 +66,7 @@ exports.default = new Command_1.Command({
             .setTitle(`مقدم من ${interaction.user.tag}`)
             .setThumbnail(interaction.user.displayAvatarURL())
             .addFields({ name: "الإسم:", value: name }, { name: "البريد الإلكتروني:", value: email }, { name: "الوظيفة:", value: theJob }, { name: "معلومات:", value: info }, { name: "المبغ:", value: amount }, { name: "طرق التواصل", value: talkWays });
-        const chnl = index_1.client.channels.cache.get(index_1.config.SHARE_WORK);
+        const chnl = index_1.client.channels.cache.get(index_1.config.PAID_WORK);
         if (chnl === null || chnl === void 0 ? void 0 : chnl.isTextBased()) {
             yield chnl.send({ embeds: [embed] });
             return yield interaction.followUp("تم الإرسال");

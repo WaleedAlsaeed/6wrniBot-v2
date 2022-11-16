@@ -48,7 +48,7 @@ export default new Command({
 
         const channel = client.channels.cache.get(channelId);
         if (!channel?.isTextBased())
-            return;
+            return await interaction.followUp("لا يمكن تعديل الرسالة في هذه القناة")
 
         await channel.messages.fetch(msgId)
             .then(async (message) => {
@@ -59,14 +59,16 @@ export default new Command({
                             .setDescription(content);
                         return await message.edit({ embeds: [embed] })
                     }
-                    return await message.edit({ content: content })
+                    await message.edit({ content: content })
                 }
                 else {
                     await interaction.followUp("الرابط ليس لرسالة أرسلها البوت!")
                 }
+
+                await interaction.followUp("تم التعديل!");
             })
             .catch(console.error)
 
-        await interaction.followUp("تم التعديل!")
+        
     },
 })

@@ -27,17 +27,23 @@ function isValidUrl(str) {
     }
 }
 exports.default = new Event_1.Event(discord_js_1.Events.MessageCreate, (message) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
+    var _a;
     if (!message.member || !message.author)
         return;
-    if (message.channelId == index_1.config.SPAM_CHANNEL)
+    if (message.channelId == "675750619784413184") // SPAM Channel
         return;
-    if (index_1.config.isModOrOwner(message.member))
+    if (message.channelId == "675750032909008947") { // INTRO Channnel
+        const role = message.member.guild.roles.cache.get("731608244606337076");
+        if (role && !message.member.roles.cache.get(role.id))
+            message.member.roles.remove(role);
         return;
+    }
     if (index_1.config.ONLY_IMAGE_CHANNELS.includes(message.channelId)) {
         if (message.attachments.size == 0) {
             const noLink = message.content.split(" ").filter(isValidUrl).length == 0;
             if (noLink) {
+                if (index_1.config.isModOrOwner(message.member))
+                    return;
                 message.delete();
                 const messageChannel = index_1.client.channels.cache.get(message.channelId);
                 const warn = messageChannel.send({ content: "**مسموح فقط بالصور والروابط في هذه القناة!!**\nالردود تكون في الثريد" });
@@ -53,31 +59,19 @@ exports.default = new Event_1.Event(discord_js_1.Events.MessageCreate, (message)
             message.react(((_a = message.guild) === null || _a === void 0 ? void 0 : _a.emojis.cache.get(index_1.config.LIKE_EMOJI)) || "👍");
         }
     }
+    if (index_1.config.isModOrOwner(message.member)
+        || index_1.config.NO_XP_CAHNNELS.includes(message.channelId))
+        return;
     //* Give Xp
-    if (message.channel.isThread() && message.channel.parent) {
-        if (message.channel.parent.type == discord_js_1.ChannelType.GuildForum) {
-            if (message.author.id != ((_b = message.thread) === null || _b === void 0 ? void 0 : _b.ownerId)) {
-                for (const forum in [xp_channels_rate_json_1.default.Niqashat, xp_channels_rate_json_1.default.UnityForum]) {
-                    const channel = xp_channels_rate_json_1.default[forum];
-                    if (message.channel.parentId == channel.id) {
-                        let xp = 0;
-                        if (message.content.length > channel.xpRate) {
-                            xp = Math.trunc(message.content.length / channel.xpRate);
-                            yield index_1.lvlsys.AddXp(message.author.id, xp);
-                            yield index_1.lvlsys.GiveRole(message.member);
-                        }
-                    }
-                }
-            }
-        }
-    }
-    else if (message.channel.type == discord_js_1.ChannelType.GuildText) {
-        for (const chnl in xp_channels_rate_json_1.default) {
-            const channel = xp_channels_rate_json_1.default[chnl];
-            if (message.channelId == channel.id || message.channel.parentId == channel.id) {
+    if (message.channel.isThread() || message.channel.type == discord_js_1.ChannelType.GuildText) {
+        if (!message.channel.parentId)
+            return;
+        for (const key in xp_channels_rate_json_1.default) {
+            const xpChannel = xp_channels_rate_json_1.default[key];
+            if (message.channelId == xpChannel.id || message.channel.parentId == xpChannel.id) {
                 let xp = 0;
-                if (message.content.length > channel.xpRate) {
-                    xp = Math.trunc(message.content.length / channel.xpRate);
+                if (message.content.length > xpChannel.xpRate) {
+                    xp = Math.trunc(message.content.length / xpChannel.xpRate);
                     yield index_1.lvlsys.AddXp(message.author.id, xp);
                     yield index_1.lvlsys.GiveRole(message.member);
                 }

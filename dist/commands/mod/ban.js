@@ -36,7 +36,7 @@ exports.default = new Command_1.Command({
             yield interaction.followUp({ content: "ليس لديك صلاحية استخدام الأمر!" });
             return;
         }
-        const user = interaction.options.getUser("user", true);
+        const user = interaction.options.getUser("member", true);
         const reason = interaction.options.getString("reason") || "غير محدد";
         if (!user) {
             yield interaction.followUp({ content: "لم يتم العثور على العضو", ephemeral: true });

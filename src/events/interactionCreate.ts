@@ -25,6 +25,8 @@ export default new Event(Events.InteractionCreate, async (interaction) => {
                 interaction: interaction as ExtendedInteraction
             });
         } catch (error) {
+            console.log(error);
+            
             config.LogChannel(`[Command Error]
                                \n**CommandName**: ${command.name}
                                \n**Channel**: ${interaction.channel?.toString()}

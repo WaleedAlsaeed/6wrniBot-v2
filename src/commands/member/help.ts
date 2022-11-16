@@ -32,7 +32,7 @@ export default new Command({
                 embed.addFields(
                     {
                         name: `/${command.name}`, value: `${command.description}
-                        \n\n------------------------------\n`}
+                        \n------------------------------\n`}
                 );
             }
 

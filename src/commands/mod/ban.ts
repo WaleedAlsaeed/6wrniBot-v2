@@ -28,7 +28,7 @@ export default new Command({
             return;
         }
         
-        const user = interaction.options.getUser("user", true);
+        const user = interaction.options.getUser("member", true);
         const reason = interaction.options.getString("reason") || "غير محدد";
 
         if(!user) {

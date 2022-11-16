@@ -19,15 +19,21 @@ export default new Event(
     async (message) => {
         if (!message.member || !message.author)
             return;
-        if (message.channelId == config.SPAM_CHANNEL)
+        if (message.channelId == "675750619784413184") // SPAM Channel
             return;
-        if (config.isModOrOwner(message.member))
+
+        if (message.channelId == "675750032909008947") { // INTRO Channnel
+            const role = message.member.guild.roles.cache.get("731608244606337076");
+            if (role && !message.member.roles.cache.get(role.id)) message.member.roles.remove(role);
             return;
+        }
 
         if (config.ONLY_IMAGE_CHANNELS.includes(message.channelId)) {
             if (message.attachments.size == 0) {
                 const noLink = message.content.split(" ").filter(isValidUrl).length == 0;
                 if (noLink) {
+                    if (config.isModOrOwner(message.member)) return;
+
                     message.delete();
                     const messageChannel = client.channels.cache.get(message.channelId) as TextBasedChannel;
                     const warn = messageChannel.send({ content: "**مسموح فقط بالصور والروابط في هذه القناة!!**\nالردود تكون في الثريد" });
@@ -44,31 +50,19 @@ export default new Event(
             }
         }
 
+        if (config.isModOrOwner(message.member) 
+            || config.NO_XP_CAHNNELS.includes(message.channelId)) return;
+
         //* Give Xp
-        if (message.channel.isThread() && message.channel.parent) {
-            if (message.channel.parent.type == ChannelType.GuildForum) {
-                if (message.author.id != message.thread?.ownerId) {
-                    for (const forum in [xpChannels.Niqashat, xpChannels.UnityForum]) {
-                        const channel = xpChannels[forum as keyof typeof xpChannels];
-                        if (message.channel.parentId == channel.id) {
-                            let xp = 0;
-                            if (message.content.length > channel.xpRate) {
-                                xp = Math.trunc(message.content.length / channel.xpRate);
-                                await lvlsys.AddXp(message.author.id, xp);
-                                await lvlsys.GiveRole(message.member);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        else if (message.channel.type == ChannelType.GuildText) {
-            for (const chnl in xpChannels) {
-                const channel = xpChannels[chnl as keyof typeof xpChannels];
-                if (message.channelId == channel.id || message.channel.parentId == channel.id) {
+        if (message.channel.isThread() || message.channel.type == ChannelType.GuildText) {
+            if (!message.channel.parentId) return;
+
+            for (const key in xpChannels) {
+                const xpChannel = xpChannels[key as keyof typeof xpChannels];
+                if (message.channelId == xpChannel.id || message.channel.parentId == xpChannel.id) {
                     let xp = 0;
-                    if (message.content.length > channel.xpRate) {
-                        xp = Math.trunc(message.content.length / channel.xpRate);
+                    if (message.content.length > xpChannel.xpRate) {
+                        xp = Math.trunc(message.content.length / xpChannel.xpRate);
                         await lvlsys.AddXp(message.author.id, xp);
                         await lvlsys.GiveRole(message.member);
                     }

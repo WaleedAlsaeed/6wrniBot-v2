@@ -1,7 +1,6 @@
 import { ApplicationCommandOptionType, EmbedBuilder, userMention } from 'discord.js';
 import { Command } from '../../structures/Command';
-import { client } from '../../index';
-import { Config } from '../../config/consts';
+import { client, config } from '../../index';
 
 
 export default new Command({
@@ -23,8 +22,6 @@ export default new Command({
         },
     ],
     run: async ({ interaction }) => {
-
-        const config = new Config();
 
         if(!config.isModOrOwner(interaction.member)){
             await interaction.reply({ content: "ليس لديك صلاحية استخدام الأمر!"});

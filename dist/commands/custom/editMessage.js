@@ -54,7 +54,7 @@ exports.default = new Command_1.Command({
         const channelId = ids[1];
         const channel = index_1.client.channels.cache.get(channelId);
         if (!(channel === null || channel === void 0 ? void 0 : channel.isTextBased()))
-            return;
+            return yield interaction.followUp("لا يمكن تعديل الرسالة في هذه القناة");
         yield channel.messages.fetch(msgId)
             .then((message) => __awaiter(void 0, void 0, void 0, function* () {
             var _a;
@@ -65,13 +65,13 @@ exports.default = new Command_1.Command({
                         .setDescription(content);
                     return yield message.edit({ embeds: [embed] });
                 }
-                return yield message.edit({ content: content });
+                yield message.edit({ content: content });
             }
             else {
                 yield interaction.followUp("الرابط ليس لرسالة أرسلها البوت!");
             }
+            yield interaction.followUp("تم التعديل!");
         }))
             .catch(console.error);
-        yield interaction.followUp("تم التعديل!");
     }),
 });

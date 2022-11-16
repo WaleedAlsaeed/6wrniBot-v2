@@ -3,7 +3,8 @@ import {
     Collection,
     ApplicationCommandDataResolvable,
     ClientEvents,
-    GatewayIntentBits
+    GatewayIntentBits,
+    Routes
 } from 'discord.js';
 import { CommandType } from "../typings/Command";
 import { RegisterCommandsOptions } from "../typings/client";
@@ -11,6 +12,7 @@ import { Event, DataBaseEvent } from './Event';
 import fs from 'fs';
 import { connect, connection } from 'mongoose';
 import { RoleButton } from './Button';
+import { client, lvlsys } from '../index';
 
 
 export class ExtendedClient extends Client {
@@ -46,16 +48,16 @@ export class ExtendedClient extends Client {
         this.login(process.env.TOKEN);
         this.ConnectToDataBase();
     }
-
+    
     async ConnectToDataBase() {
         if (process.env.DATABASE)
-            await connect(process.env.DATABASE).catch(console.error);
+        await connect(process.env.DATABASE).catch(console.error);
     }
-
+    
     async importFile(filePath: string) {
         return (await import(filePath))?.default;
     }
-
+    
     async registerCommands({ commands, guildId }: RegisterCommandsOptions) {
         if (guildId) {
             this.guilds.cache.get(guildId)?.commands.set(commands);
@@ -64,9 +66,15 @@ export class ExtendedClient extends Client {
             this.application?.commands.set(commands);
         }
     }
-
+    
     async registerModules() {
-        //* Register Commands
+        await this.loadCommands();
+        await this.loadComponents();
+        await this.loadEvents(); 
+        await this.loadDataBaseEvents();
+    }
+
+    async loadCommands() {
         const slashCommands: ApplicationCommandDataResolvable[] = [];
         const commandFolders = fs.readdirSync("./src/commands");
         for (const folder of commandFolders) {
@@ -81,7 +89,16 @@ export class ExtendedClient extends Client {
             console.log(`"${folder}" commands are loded`);
         }
 
+        this.on("ready", async () => {
+            this.registerCommands({
+                commands: slashCommands,
+                guildId: process.env.GUILDID
+            });
+            console.log("Bot is Online!");
+        });
+    }
 
+    async loadComponents() {
         const componentsFolders = fs.readdirSync("./src/components");
         for (const folder of componentsFolders) {
             switch (folder) {
@@ -98,16 +115,9 @@ export class ExtendedClient extends Client {
 
             console.log(`"${folder}" components are loded`);
         }
+    }
 
-        this.on("ready", () => {
-            this.registerCommands({
-                commands: slashCommands,
-                guildId: process.env.guildId
-            });
-            console.log("Bot is Online!");
-        });
-
-        //* Events
+    async loadEvents() {
         const eventFiles = fs.readdirSync(`./src/events`);
         eventFiles.forEach(async (file) => {
             const event: Event<keyof ClientEvents> = await this.importFile(`../events/${file.replace(".ts", "")}`);
@@ -120,8 +130,9 @@ export class ExtendedClient extends Client {
             });
             console.log(`Event "${event.event}" is loded`);
         });
+    }
 
-        //* DataBase Events
+    async loadDataBaseEvents() {
         const dbeventFiles = fs.readdirSync(`./src/database`);
         dbeventFiles.forEach(async (file) => {
             const event: DataBaseEvent = await this.importFile(`../database/${file.replace(".ts", "")}`);
@@ -136,6 +147,6 @@ export class ExtendedClient extends Client {
                 });
             }
         });
-
     }
+
 }

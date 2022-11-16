@@ -18,7 +18,7 @@ exports.default = new Command_1.Command({
     onlyInCommandChannel: false,
     options: [
         {
-            name: "user",
+            name: "member",
             description: "إسم العضو",
             type: discord_js_1.ApplicationCommandOptionType.User,
             required: true

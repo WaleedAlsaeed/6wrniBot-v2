@@ -8,7 +8,7 @@ export default new Command({
     onlyInCommandChannel: false,
     options: [
         {
-            name: "user",
+            name: "member",
             description: "إسم العضو",
             type: ApplicationCommandOptionType.User,
             required: true 

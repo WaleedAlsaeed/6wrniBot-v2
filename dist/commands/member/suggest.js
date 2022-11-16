@@ -12,36 +12,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const Command_1 = require("../../structures/Command");
 const index_1 = require("../../index");
+function mSecToSec(ms) {
+    if (!ms)
+        return 0;
+    return Math.trunc(ms / 1000);
+}
 exports.default = new Command_1.Command({
-    name: "leaderboard",
-    description: "عرض المستوى الخاص بك",
+    name: "suggest",
+    description: "إرسال اقتراح متعلق بالسيرفر أو المنصة عمومًا",
     onlyInCommandChannel: true,
     options: [
         {
-            name: "count",
-            description: "عدد الذين تريد عرضهم بالقائمة",
-            type: discord_js_1.ApplicationCommandOptionType.Number,
+            name: "content",
+            description: "محتوى الإقتراح",
+            type: discord_js_1.ApplicationCommandOptionType.String,
             required: true
         }
     ],
     run: ({ interaction }) => __awaiter(void 0, void 0, void 0, function* () {
-        var _a, _b;
-        let count = interaction.options.getNumber("count", true);
-        if (count > 25 || count < 3) {
-            count = 20;
+        const content = interaction.options.getString("content", true);
+        if (content.length < 10) {
+            return yield interaction.followUp({ content: "يرجى كتابة إقتراح حقيقي مع تفاصيله!!" });
         }
-        const leaderboard = yield index_1.lvlsys.XpLeaderBoard(count);
         const embed = new discord_js_1.EmbedBuilder()
-            .setColor(index_1.config.DEFAULT_COLOR);
-        let i = 0;
-        for (const member of leaderboard) {
-            i += 1;
-            embed.addFields({
-                name: `A-${i}. ${(_b = (yield ((_a = interaction.guild) === null || _a === void 0 ? void 0 : _a.members.fetch(member.memberId)))) === null || _b === void 0 ? void 0 : _b.displayName}`,
-                value: `[XP: ${member.xp} --- lvl: ${yield index_1.lvlsys.MemberLvl(member.memberId)}]`,
-                inline: true
-            });
-        }
-        yield interaction.followUp({ embeds: [embed] });
+            .setTitle(`[إقتراح] - ${interaction.user.tag}`)
+            .setColor(index_1.config.DEFAULT_COLOR)
+            .addFields({ name: "التفاصيل", value: content });
+        const suggestChannel = index_1.client.channels.cache.get(index_1.config.SUGGEST_CHANNEL);
+        yield suggestChannel.send({ embeds: [embed] });
+        yield interaction.followUp({ content: "تم إرسال الإقتراح!" });
     }),
 });

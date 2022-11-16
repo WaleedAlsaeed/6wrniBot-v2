@@ -1,5 +1,5 @@
 import { Members } from '../schema/members';
-import { Collection, GuildMember } from 'discord.js';
+import { GuildMember } from 'discord.js';
 const mongoos = require('mongoose')
 
 export class LevelSystem {
@@ -124,14 +124,26 @@ export class LevelSystem {
         while (leaderBoard[Math.min(block, n) - 1].xp < xp) {
             currentStep = block;
             block += 100;
-            if (currentStep >= n) return "Null";
+            if (currentStep >= n) return "مجهول";
         }
 
         while (leaderBoard[currentStep].memberId.localeCompare(memberId)) {
             currentStep++;
-            if (currentStep >= Math.min(block, n)) return "Null";
+            if (currentStep >= Math.min(block, n)) return "مجهول";
         }
         
         return `${n - currentStep}/${n}`;
+    }
+
+    MemberLvl = async (memberId: string) => {
+        const totalXp = await this.GetMemberXp(memberId);
+        let requiredlvlxp = 0;
+        for (let i = 1; i < 1000; i++) {
+            requiredlvlxp += i * 100;
+            if (totalXp <= requiredlvlxp) {
+                return i;
+            }
+        }
+        return 1;
     }
 }

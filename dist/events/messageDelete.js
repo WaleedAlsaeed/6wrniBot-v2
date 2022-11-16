@@ -12,6 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const Event_1 = require("../structures/Event");
 const index_1 = require("../index");
+const mSecToSec = (ms) => {
+    if (!ms)
+        return 0;
+    return Math.trunc(ms / 1000);
+};
 exports.default = new Event_1.Event(discord_js_1.Events.MessageDelete, (message) => __awaiter(void 0, void 0, void 0, function* () {
     if (!message.member || !message.content)
         return;
@@ -21,7 +26,7 @@ exports.default = new Event_1.Event(discord_js_1.Events.MessageDelete, (message)
         .setTitle(`[حذف رسالة] - ${message.member.user.tag}`)
         .setDescription(`حذف ${(0, discord_js_1.userMention)(message.member.id)} رسالة في ${message.channel.toString()}`)
         .setColor(index_1.config.DEFAULT_COLOR)
-        .addFields({ name: "تاريخ الإرسال:", value: `<t:${message.createdTimestamp}:f>` }, { name: "المحتوى:", value: message.content });
+        .addFields({ name: "تاريخ الإرسال:", value: `<t:${mSecToSec(message.createdTimestamp)}:f>` }, { name: "المحتوى:", value: message.content });
     const deletedMessages = index_1.client.channels.cache.get(index_1.config.DELETED_MESSAGES_CHANNEL);
     deletedMessages.send({ embeds: [embed] });
 }));

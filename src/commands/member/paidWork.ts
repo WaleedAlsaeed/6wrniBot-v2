@@ -66,7 +66,7 @@ export default new Command({
                 { name: "المبغ:", value: amount },
                 { name: "طرق التواصل", value: talkWays }
             );
-        const chnl = client.channels.cache.get(config.SHARE_WORK);
+        const chnl = client.channels.cache.get(config.PAID_WORK);
         if (chnl?.isTextBased()) {
             await chnl.send({ embeds: [embed] })
             return await interaction.followUp("تم الإرسال");

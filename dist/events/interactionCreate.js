@@ -33,6 +33,7 @@ exports.default = new Event_1.Event(discord_js_1.Events.InteractionCreate, (inte
             });
         }
         catch (error) {
+            console.log(error);
             index_1.config.LogChannel(`[Command Error]
                                \n**CommandName**: ${command.name}
                                \n**Channel**: ${(_a = interaction.channel) === null || _a === void 0 ? void 0 : _a.toString()}

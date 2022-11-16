@@ -140,14 +140,25 @@ class LevelSystem {
                 currentStep = block;
                 block += 100;
                 if (currentStep >= n)
-                    return "Null";
+                    return "مجهول";
             }
             while (leaderBoard[currentStep].memberId.localeCompare(memberId)) {
                 currentStep++;
                 if (currentStep >= Math.min(block, n))
-                    return "Null";
+                    return "مجهول";
             }
             return `${n - currentStep}/${n}`;
+        });
+        this.MemberLvl = (memberId) => __awaiter(this, void 0, void 0, function* () {
+            const totalXp = yield this.GetMemberXp(memberId);
+            let requiredlvlxp = 0;
+            for (let i = 1; i < 1000; i++) {
+                requiredlvlxp += i * 100;
+                if (totalXp <= requiredlvlxp) {
+                    return i;
+                }
+            }
+            return 1;
         });
     }
 }
