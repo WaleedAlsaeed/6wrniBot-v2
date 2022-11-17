@@ -24,7 +24,7 @@ export default new Event(
 
         if (message.channelId == "675750032909008947") { // INTRO Channnel
             const role = message.member.guild.roles.cache.get("731608244606337076");
-            if (role && !message.member.roles.cache.get(role.id)) message.member.roles.remove(role);
+            if (role && message.member.roles.cache.get(role.id)) message.member.roles.remove(role);
             message.react(message.guild?.emojis.cache.get(config.LIKE_EMOJI) || "👍");
             return;
         }

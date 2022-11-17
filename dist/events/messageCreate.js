@@ -27,15 +27,16 @@ function isValidUrl(str) {
     }
 }
 exports.default = new Event_1.Event(discord_js_1.Events.MessageCreate, (message) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _a, _b;
     if (!message.member || !message.author)
         return;
     if (message.channelId == "675750619784413184") // SPAM Channel
         return;
     if (message.channelId == "675750032909008947") { // INTRO Channnel
         const role = message.member.guild.roles.cache.get("731608244606337076");
-        if (role && !message.member.roles.cache.get(role.id))
+        if (role && message.member.roles.cache.get(role.id))
             message.member.roles.remove(role);
+        message.react(((_a = message.guild) === null || _a === void 0 ? void 0 : _a.emojis.cache.get(index_1.config.LIKE_EMOJI)) || "👍");
         return;
     }
     if (index_1.config.ONLY_IMAGE_CHANNELS.includes(message.channelId)) {
@@ -56,7 +57,7 @@ exports.default = new Event_1.Event(discord_js_1.Events.MessageCreate, (message)
                 name: `التعليق على المشاركة`,
                 rateLimitPerUser: 4
             });
-            message.react(((_a = message.guild) === null || _a === void 0 ? void 0 : _a.emojis.cache.get(index_1.config.LIKE_EMOJI)) || "👍");
+            message.react(((_b = message.guild) === null || _b === void 0 ? void 0 : _b.emojis.cache.get(index_1.config.LIKE_EMOJI)) || "👍");
         }
     }
     if (index_1.config.isModOrOwner(message.member)

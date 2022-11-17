@@ -56,19 +56,19 @@ export class LevelSystem {
         const xp = await this.GetMemberXp(member.id);
         if (xp <= 1500) { // عضو صاعد
             const role = member.guild.roles.cache.get("674578404841881640");
-            if (role && member.roles.cache.get(role.id)) member.roles.remove(role); return;
+            if (role && member.roles.cache.get(role.id)) member.roles.remove(role);
         }
         if (xp <= 5500) { // عضو مشارك
             const role = member.guild.roles.cache.get("674578841913655306");
-            if (role && member.roles.cache.get(role.id)) member.roles.remove(role); return;
+            if (role && member.roles.cache.get(role.id)) member.roles.remove(role);
         }
         if (xp <= 21000) { // عضو مميز
             const role = member.guild.roles.cache.get("674579110130876427");
-            if (role && member.roles.cache.get(role.id)) member.roles.remove(role); return;
+            if (role && member.roles.cache.get(role.id)) member.roles.remove(role);
         }
         if (xp <= 505000) { // عضو أسطوري
             const role = member.guild.roles.cache.get("674579236899520512");
-            if (role && member.roles.cache.get(role.id)) member.roles.remove(role); return;
+            if (role && member.roles.cache.get(role.id)) member.roles.remove(role);
         }
     }
 
