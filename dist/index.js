@@ -22,18 +22,20 @@ exports.client = new Client_1.ExtendedClient();
 exports.config = new consts_1.Config();
 exports.lvlsys = new LevelSystem_1.LevelSystem();
 exports.client.start();
-function checkUpdates(num) {
-    if (num > 2)
-        exports.config.LogChannel("Unable to check updates");
+function checkUpdates() {
     setTimeout(() => __awaiter(this, void 0, void 0, function* () {
-        try {
-            const { data, status } = yield axios_1.default.get(process.env.UPDATE || "");
-            console.log(data);
-            console.log('response status is: ', status);
+        for (let i = 0; i < 5; i++) {
+            try {
+                const { data, status } = yield axios_1.default.get(process.env.UPDATE || "");
+                console.log(data);
+                console.log('response status is: ', status);
+                return;
+            }
+            catch (error) {
+                console.log(error);
+            }
         }
-        catch (error) {
-            checkUpdates(num + 1);
-        }
+        exports.config.LogChannel("Unable to check updates");
     }), 2500000);
 }
-checkUpdates(0);
+checkUpdates();
