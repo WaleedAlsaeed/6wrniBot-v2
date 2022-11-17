@@ -1,28 +1,15 @@
-import { ApplicationCommandOptionType, EmbedBuilder } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 import { Command } from '../../structures/Command';
 import { lvlsys, config } from '../../index';
 
 
 export default new Command({
     name: "leaderboard",
-    description: "عرض المستوى الخاص بك",
+    description: "عرض أعلى 24 عضو في النقاط",
     onlyInCommandChannel: true,
-    options: [
-        {
-            name: "count",
-            description: "عدد الذين تريد عرضهم بالقائمة",
-            type: ApplicationCommandOptionType.Number,
-            required: true
-        }
-    ],
     run: async ({ interaction }) => {
 
-        let count = interaction.options.getNumber("count", true);
-
-        if (count > 25 || count < 3) {
-            count = 20;
-        }
-        const leaderboard = await lvlsys.XpLeaderBoard(count);
+        const leaderboard = await lvlsys.XpLeaderBoard(24);
         
         const embed = new EmbedBuilder()
         .setColor(config.DEFAULT_COLOR);

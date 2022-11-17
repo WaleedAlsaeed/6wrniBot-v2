@@ -14,23 +14,11 @@ const Command_1 = require("../../structures/Command");
 const index_1 = require("../../index");
 exports.default = new Command_1.Command({
     name: "leaderboard",
-    description: "عرض المستوى الخاص بك",
+    description: "عرض أعلى 24 عضو في النقاط",
     onlyInCommandChannel: true,
-    options: [
-        {
-            name: "count",
-            description: "عدد الذين تريد عرضهم بالقائمة",
-            type: discord_js_1.ApplicationCommandOptionType.Number,
-            required: true
-        }
-    ],
     run: ({ interaction }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
-        let count = interaction.options.getNumber("count", true);
-        if (count > 25 || count < 3) {
-            count = 20;
-        }
-        const leaderboard = yield index_1.lvlsys.XpLeaderBoard(count);
+        const leaderboard = yield index_1.lvlsys.XpLeaderBoard(24);
         const embed = new discord_js_1.EmbedBuilder()
             .setColor(index_1.config.DEFAULT_COLOR);
         let i = 0;
