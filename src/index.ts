@@ -11,20 +11,22 @@ export const lvlsys = new LevelSystem();
 
 client.start();
 
-function checkUpdates(num: number) {
-    if (num > 2) config.LogChannel("Unable to check updates");
-
-    setTimeout(async () => {
-        try {
-            const { data, status } = await axios.get(
-                process.env.UPDATE || ""
-            );
-            console.log(data);
-            console.log('response status is: ', status);
-        } catch (error) {
-            checkUpdates(num + 1);
-        }
-    }, 2500000);
-}
-
-checkUpdates(0);
+//function checkUpdates() {
+//    setTimeout(async () => {
+//        for (let i = 0; i < 5; i++) {
+//            try {
+//                const { data, status } = await axios.get(
+//                    process.env.UPDATE || ""
+//                );
+//                console.log(data);
+//                console.log('response status is: ', status);
+//                return;
+//            } catch (error) {
+//                console.log(error);
+//            }
+//        }
+//        config.LogChannel("Unable to check updates");
+//    }, 2500000);
+//}
+//
+//checkUpdates();
