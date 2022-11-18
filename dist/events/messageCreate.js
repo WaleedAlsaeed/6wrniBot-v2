@@ -41,7 +41,7 @@ exports.default = new Event_1.Event(discord_js_1.Events.MessageCreate, (message)
     }
     if (index_1.config.ONLY_IMAGE_CHANNELS.includes(message.channelId)) {
         if (message.attachments.size == 0) {
-            const noLink = message.content.split(" ").filter(isValidUrl).length == 0;
+            const noLink = message.content.split(/(\s+)/).filter(isValidUrl).length == 0;
             if (noLink) {
                 if (index_1.config.isModOrOwner(message.member))
                     return;
@@ -54,7 +54,7 @@ exports.default = new Event_1.Event(discord_js_1.Events.MessageCreate, (message)
         }
         if (message.channelId == index_1.config.SHARE_WORK) {
             message.startThread({
-                name: `التعليق على المشاركة`,
+                name: `التعليق على مشاركة ${message.author.username}`,
                 rateLimitPerUser: 4
             });
             message.react(((_b = message.guild) === null || _b === void 0 ? void 0 : _b.emojis.cache.get(index_1.config.LIKE_EMOJI)) || "👍");

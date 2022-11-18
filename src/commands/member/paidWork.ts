@@ -59,12 +59,12 @@ export default new Command({
             .setTitle(`مقدم من ${interaction.user.tag}`)
             .setThumbnail(interaction.user.displayAvatarURL())
             .addFields(
-                { name: "الإسم:", value: name },
-                { name: "البريد الإلكتروني:", value: email },
-                { name: "الوظيفة:", value: theJob },
-                { name: "معلومات:", value: info },
-                { name: "المبغ:", value: amount },
-                { name: "طرق التواصل", value: talkWays }
+                { name: "- الإسم:", value: name },
+                { name: "- البريد الإلكتروني:", value: email },
+                { name: "- الوظيفة:", value: theJob },
+                { name: "- معلومات:", value: info },
+                { name: "- المبلغ:", value: amount },
+                { name: "- طرق التواصل:", value: talkWays }
             );
         const chnl = client.channels.cache.get(config.PAID_WORK);
         if (chnl?.isTextBased()) {

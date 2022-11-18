@@ -31,7 +31,7 @@ export default new Event(
 
         if (config.ONLY_IMAGE_CHANNELS.includes(message.channelId)) {
             if (message.attachments.size == 0) {
-                const noLink = message.content.split(" ").filter(isValidUrl).length == 0;
+                const noLink = message.content.split(/(\s+)/).filter(isValidUrl).length == 0;
                 if (noLink) {
                     if (config.isModOrOwner(message.member)) return;
 
@@ -44,7 +44,7 @@ export default new Event(
             }
             if (message.channelId == config.SHARE_WORK) {
                 message.startThread({
-                    name: `التعليق على المشاركة`,
+                    name: `التعليق على مشاركة ${message.author.username}`,
                     rateLimitPerUser: 4
                 });
                 message.react(message.guild?.emojis.cache.get(config.LIKE_EMOJI) || "👍");
