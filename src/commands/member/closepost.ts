@@ -10,7 +10,7 @@ async function importFile(filePath: string) {
 
 export default new Command({
     name: "close-post",
-    description: "جميع أوامر البوت",
+    description: "إغلاق منشور في فورم يونتي",
     onlyInCommandChannel: false,
     run: async ({ interaction }) => {
         if (interaction.channel?.isThread()) {

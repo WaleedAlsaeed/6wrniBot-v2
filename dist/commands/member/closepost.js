@@ -46,7 +46,7 @@ function importFile(filePath) {
 }
 exports.default = new Command_1.Command({
     name: "close-post",
-    description: "جميع أوامر البوت",
+    description: "إغلاق منشور في فورم يونتي",
     onlyInCommandChannel: false,
     run: ({ interaction }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
