@@ -9,7 +9,7 @@ export default new Command({
     options: [
         {
             name: "qeury",
-            description: "المحتوى",
+            description: "الشيء المراد بحث عنه",
             type: ApplicationCommandOptionType.String,
             required: true
         }

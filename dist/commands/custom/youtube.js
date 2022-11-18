@@ -19,7 +19,7 @@ exports.default = new Command_1.Command({
     options: [
         {
             name: "qeury",
-            description: "المحتوى",
+            description: "الشيء المراد بحث عنه",
             type: discord_js_1.ApplicationCommandOptionType.String,
             required: true
         }
