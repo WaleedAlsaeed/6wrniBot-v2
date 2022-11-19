@@ -28,15 +28,13 @@ function isValidUrl(str) {
 exports.default = new Event_1.Event(discord_js_1.Events.ThreadCreate, (thread) => __awaiter(void 0, void 0, void 0, function* () {
     if (!thread.parent)
         return;
-    if (thread.parent.type == discord_js_1.ChannelType.GuildForum) {
-        if (thread.parentId == xp_channels_rate_json_1.default.UnityForum.id) {
-            let msg = `نشكرك على الوثوق بالمنصة للحصول على إجابة لسؤالك`;
-            msg += `\nنتمنى منك أن تطبق هذه الأمور:`;
-            msg += `\n1- حاول حل مشكلتك بمفردك بينما يأتي شخص ما ليساعدك`;
-            msg += `\n2- بعض الأسئلة والأخطاء يمكن العثور على أجوبة وحلول لها بالبحث في جوجل أو يوتيوب`;
-            msg += `\n3- لا تقم بعمل منشن للأعضاء ليساعدوك بحل المشكلة، انت حتى يأتي شخص ما ليساعدك`;
-            msg += `\n4- اذا تم حل مشكلتك استخدم الأمر /close-post لإغلاق هذه القناة`;
-            yield thread.send(msg);
-        }
+    if (thread.parentId == xp_channels_rate_json_1.default.UnityForum.id) {
+        let msg = `نشكرك على الوثوق بالمنصة للحصول على إجابة لسؤالك`;
+        msg += `\nنتمنى منك أن تطبق هذه الأمور:`;
+        msg += `\n1- حاول حل مشكلتك بمفردك بينما يأتي شخص ما ليساعدك`;
+        msg += `\n2- بعض الأسئلة والأخطاء يمكن العثور على أجوبة وحلول لها بالبحث في جوجل أو يوتيوب`;
+        msg += `\n3- لا تقم بعمل منشن للأعضاء ليساعدوك بحل المشكلة، انت حتى يأتي شخص ما ليساعدك`;
+        msg += `\n4- اذا تم حل مشكلتك استخدم الأمر /close-post لإغلاق هذه القناة`;
+        yield thread.send(msg);
     }
 }));

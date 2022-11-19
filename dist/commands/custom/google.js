@@ -22,10 +22,20 @@ exports.default = new Command_1.Command({
             description: "الشيء المراد بحث عنه",
             type: discord_js_1.ApplicationCommandOptionType.String,
             required: true
+        },
+        {
+            name: "member",
+            description: "العضو المراد إعطاءه الرابط",
+            type: discord_js_1.ApplicationCommandOptionType.User,
+            required: false
         }
     ],
     run: ({ interaction }) => __awaiter(void 0, void 0, void 0, function* () {
         const qeury = interaction.options.getString("qeury", true);
-        yield interaction.followUp(`https://google.com/search?${(0, query_string_1.stringify)({ q: qeury })}`);
+        const member = interaction.options.getUser("member");
+        let msg = `https://google.com/search?${(0, query_string_1.stringify)({ q: qeury })}`;
+        if (member)
+            msg = `هذا الرابط لك يا ${(0, discord_js_1.userMention)(member.id)}\n` + msg;
+        yield interaction.followUp(msg);
     }),
 });

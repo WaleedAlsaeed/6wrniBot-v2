@@ -14,12 +14,12 @@ export default new Command({
     onlyInCommandChannel: false,
     run: async ({ interaction }) => {
         if (interaction.channel?.isThread()) {
-            if (interaction.channel.parent?.type == ChannelType.GuildForum) {
-                if (interaction.channel.parentId == xpChannels.UnityForum.id) {
-                    await interaction.followUp("تم إغلاق المنشور!")
-                    await interaction.channel.setArchived(true);
-                }
+            if (interaction.channel.parentId == xpChannels.UnityForum.id) {
+                await interaction.followUp("تم إغلاق المنشور!")
+                await interaction.channel.setArchived(true);
             }
+            await interaction.followUp("يمكنك استخدام هذا الأمر فقط في قناة فورم يونتي")
         }
+        await interaction.followUp("يمكنك استخدام هذا الأمر فقط في قناة فورم يونتي")
     },
 })
