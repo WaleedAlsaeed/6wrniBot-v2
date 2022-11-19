@@ -11,6 +11,7 @@ export default new Command({
             if (interaction.channel.parentId == xpChannels.UnityForum.id) {
                 await interaction.followUp("تم إغلاق المنشور!")
                 await interaction.channel.setArchived(true);
+                return;
             }
             return await interaction.followUp("يمكنك استخدام هذا الأمر فقط في قناة فورم يونتي")
         }

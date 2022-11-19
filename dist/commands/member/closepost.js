@@ -24,6 +24,7 @@ exports.default = new Command_1.Command({
             if (interaction.channel.parentId == xp_channels_rate_json_1.default.UnityForum.id) {
                 yield interaction.followUp("تم إغلاق المنشور!");
                 yield interaction.channel.setArchived(true);
+                return;
             }
             return yield interaction.followUp("يمكنك استخدام هذا الأمر فقط في قناة فورم يونتي");
         }
