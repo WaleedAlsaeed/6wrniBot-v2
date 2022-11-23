@@ -43,8 +43,8 @@ export default new Command({
     ],
     autocomplete: async (interaction, client) => {
         const focusedValue = interaction.options.getFocused();
-        const value = focusedValue.toLowerCase().split(/(\s+)/).join("")
-		const filtered = choices.filter(choice => isSubSequence(value, choice.toLowerCase(), value.length, choice.length));
+        const x = focusedValue.replace(" ", "")
+		const filtered = choices.filter(choice => isSubSequence(x.toLowerCase(), choice.toLowerCase(), x.length, choice.length));
 		await interaction.respond(
 			filtered.map(choice => ({ name: choice, value: choice })).slice(0, 25),
 		);
