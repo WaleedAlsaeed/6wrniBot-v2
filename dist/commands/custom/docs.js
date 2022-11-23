@@ -16,6 +16,19 @@ const discord_js_1 = require("discord.js");
 const Command_1 = require("../../structures/Command");
 const unityDocs_json_1 = __importDefault(require("../../config/unityDocs.json"));
 const choices = unityDocs_json_1.default["Manual"].concat(unityDocs_json_1.default["ScriptReference"]);
+function isSubSequence(str1, str2, m, n) {
+    // Base Cases
+    if (m == 0)
+        return true;
+    else if (n == 0)
+        return false;
+    // If last characters of two strings
+    // are matching
+    if (str1[m - 1] == str2[n - 1])
+        return isSubSequence(str1, str2, m - 1, n - 1);
+    // If last characters are not matching
+    return isSubSequence(str1, str2, m, n - 1);
+}
 exports.default = new Command_1.Command({
     name: "unity-docs",
     description: "تعديل رسالة من البوت سواء كانت عادية أو ايمبد. للمشرفين فقط",
@@ -37,7 +50,7 @@ exports.default = new Command_1.Command({
     ],
     autocomplete: (interaction, client) => __awaiter(void 0, void 0, void 0, function* () {
         const focusedValue = interaction.options.getFocused();
-        const filtered = choices.filter(choice => choice.includes(focusedValue));
+        const filtered = choices.filter(choice => isSubSequence(focusedValue, choice, focusedValue.length, choice.length));
         yield interaction.respond(filtered.map(choice => ({ name: choice, value: choice })).slice(0, 25));
     }),
     run: ({ interaction }) => __awaiter(void 0, void 0, void 0, function* () {
