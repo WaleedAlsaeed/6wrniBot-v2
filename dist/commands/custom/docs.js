@@ -50,7 +50,8 @@ exports.default = new Command_1.Command({
     ],
     autocomplete: (interaction, client) => __awaiter(void 0, void 0, void 0, function* () {
         const focusedValue = interaction.options.getFocused();
-        const filtered = choices.filter(choice => isSubSequence(focusedValue.toLowerCase().split(/(\s+)/).join(""), choice.toLowerCase(), focusedValue.length, choice.length));
+        const value = focusedValue.toLowerCase().split(/(\s+)/).join("");
+        const filtered = choices.filter(choice => isSubSequence(value, choice.toLowerCase(), value.length, choice.length));
         yield interaction.respond(filtered.map(choice => ({ name: choice, value: choice })).slice(0, 25));
     }),
     run: ({ interaction }) => __awaiter(void 0, void 0, void 0, function* () {
