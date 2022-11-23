@@ -2,7 +2,6 @@ require('dotenv').config();
 import { ExtendedClient } from './structures/Client';
 import { Config } from './config/consts';
 import { LevelSystem } from './config/LevelSystem';
-import axios from 'axios';
 
 
 export const client = new ExtendedClient();
@@ -11,22 +10,12 @@ export const lvlsys = new LevelSystem();
 
 client.start();
 
-function checkUpdates() {
-    setTimeout(async () => {
-        for (let i = 0; i < 5; i++) {
-            try {
-                const { data, status } = await axios.get(
-                    process.env.UPDATE || ""
-                );
-                console.log(data);
-                console.log('response status is: ', status);
-                return;
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        config.LogChannel("Unable to check updates");
-    }, 2500000);
-}
-
-checkUpdates();
+import express from 'express';
+const app = express()
+const port = 3000
+app.get('/', (req, res) => {
+  res.status(200).send('OK')
+})
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
