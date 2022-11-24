@@ -87,7 +87,6 @@ export class LevelSystem {
         for (let i = 1; i < 1000; i++) {
             requiredlvlxp += i * 100;
             if (totalXp <= requiredlvlxp) {
-                const xpInLvl = requiredlvlxp - totalXp;
                 return i;
             }
         }
