@@ -14,4 +14,4 @@ const contestSchema = new Schema({
     wins: { required: true, type: Number}
 })
 
-export const Contest = model("Guild", contestSchema, "contest");
+export const Contest = model("Contest", contestSchema, "contest");

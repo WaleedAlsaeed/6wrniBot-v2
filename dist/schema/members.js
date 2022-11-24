@@ -13,4 +13,4 @@ const contestSchema = new mongoose_1.Schema({
     memberId: { required: true, type: String },
     wins: { required: true, type: Number }
 });
-exports.Contest = (0, mongoose_1.model)("Guild", contestSchema, "contest");
+exports.Contest = (0, mongoose_1.model)("Contest", contestSchema, "contest");

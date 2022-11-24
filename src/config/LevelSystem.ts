@@ -130,7 +130,7 @@ export class LevelSystem {
             currentStep++;
             if (currentStep >= Math.min(block, n)) return "مجهول";
         }
-        
+
         return `${n - currentStep}/${n}`;
     }
 

@@ -53,6 +53,8 @@ export default new Command({
 
         let winners = "";
         let added = ids.length;
+
+        
         for (let i = 0; i < ids.length; i++) {
             const id = ids[i];
             
@@ -87,7 +89,7 @@ export default new Command({
             if (number - contestant.wins >= 3) {
                 notActive += 1;
                 config.LogChannel(`العضو ${userMention(contestant.memberId)} ليس مشارك من 3 مسابقات، قم بإنقاص رتبته`)
-            }
+            }   
         }
 
         let msg = `لقد تم تحديد المشاركين وتوزيع الرتب ل ${added} عضو، وهم: \n${winners}`;
