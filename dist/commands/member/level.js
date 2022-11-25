@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const Command_1 = require("../../structures/Command");
 const index_1 = require("../../index");
+const members_1 = require("../../schema/members");
 exports.default = new Command_1.Command({
     name: "level",
     description: "عرض المستوى الخاص بك",
@@ -25,7 +26,7 @@ exports.default = new Command_1.Command({
         }
     ],
     run: ({ interaction }) => __awaiter(void 0, void 0, void 0, function* () {
-        var _a, _b;
+        var _a, _b, _c;
         let user = interaction.options.getUser("member");
         if (!user)
             user = interaction.member.user;
@@ -37,7 +38,7 @@ exports.default = new Command_1.Command({
             .setThumbnail(user.displayAvatarURL())
             .setColor(highestRoleColor || index_1.config.DEFAULT_COLOR)
             .setTitle(`[مستوى] - ${user.username}`)
-            .addFields({ name: "مجموع النقاط:", value: `${totalXp}` }, { name: "المستوى:", value: `${lvl}` }, { name: "النقاط:", value: `${totalXp - requiredlvlxp}/${lvl * 100}` }, { name: "الترتيب:", value: `${yield index_1.lvlsys.MemberRank(user.id)}` });
+            .addFields({ name: "مجموع النقاط:", value: `${totalXp}` }, { name: "المستوى:", value: `${lvl}` }, { name: "النقاط:", value: `${totalXp - requiredlvlxp}/${lvl * 100}` }, { name: "الترتيب:", value: `${yield index_1.lvlsys.MemberRank(user.id)}` }, { name: "المسابقات المشارك بها:", value: `${((_c = (yield members_1.Contest.findOne({ memberId: user.id }))) === null || _c === void 0 ? void 0 : _c.wins) || 0}` });
         yield interaction.followUp({ embeds: [embed] });
     }),
 });

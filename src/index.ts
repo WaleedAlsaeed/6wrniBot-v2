@@ -15,9 +15,6 @@ const port = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
     res.status(200).send('OK');
-});
-
-app.listen(port, () => {
     client.start();
     setTimeout(async () => {
         for (let i = 0; i < 30; i++) {
@@ -34,4 +31,9 @@ app.listen(port, () => {
         }
         config.LogChannel("Unable to check updates");
     }, 1200000);
+});
+
+app.listen(port, () => {
+    console.log("Listen in port: " + port);
+    
 });

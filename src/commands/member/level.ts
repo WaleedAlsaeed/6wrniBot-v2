@@ -1,6 +1,7 @@
 import { ApplicationCommandOptionType, EmbedBuilder } from 'discord.js';
 import { Command } from '../../structures/Command';
 import { lvlsys, config } from '../../index';
+import { Contest } from '../../schema/members';
 
 
 export default new Command({
@@ -32,7 +33,8 @@ export default new Command({
             { name: "مجموع النقاط:", value: `${totalXp}`},
             { name: "المستوى:", value: `${lvl}`},
             { name: "النقاط:", value: `${totalXp - requiredlvlxp}/${lvl * 100}`},
-            { name: "الترتيب:", value: `${await lvlsys.MemberRank(user.id)}`}
+            { name: "الترتيب:", value: `${await lvlsys.MemberRank(user.id)}`},
+            { name: "المسابقات المشارك بها:", value: `${(await Contest.findOne({ memberId: user.id}))?.wins || 0}`}
         )
         await interaction.followUp({embeds: [embed]});
 
