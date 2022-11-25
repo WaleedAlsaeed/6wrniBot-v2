@@ -15,28 +15,37 @@ const index_1 = require("../../index");
 const members_1 = require("../../schema/members");
 const mongoos = require('mongoose');
 function GiveRole(member, wins) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (wins >= 3) { // فائز برونزي
-            const role = member.guild.roles.cache.get("1045253673917370398");
-            if (role && member.roles.cache.get(role.id))
-                member.roles.add(role);
-        }
-        if (wins >= 10) { // فائز فضي
-            const role = member.guild.roles.cache.get("1045253673917370398");
-            if (role && member.roles.cache.get(role.id))
-                member.roles.add(role);
-        }
-        if (wins >= 20) { // فائز ذهبي
-            const role = member.guild.roles.cache.get("1045253673917370398");
-            if (role && member.roles.cache.get(role.id))
-                member.roles.add(role);
-        }
-        if (wins >= 35) { // فائز بلاتيني
-            const role = member.guild.roles.cache.get("1045253673917370398");
-            if (role && member.roles.cache.get(role.id))
-                member.roles.add(role);
-        }
-    });
+    if (wins >= 3) { // فائز برونزي
+        const role = member.guild.roles.cache.get("1044949411953901578");
+        if (role && member.roles.cache.get(role.id))
+            member.roles.add(role);
+    }
+    if (wins >= 10) { // فائز فضي
+        const role = member.guild.roles.cache.get("1044949538273771562");
+        if (role && member.roles.cache.get(role.id))
+            member.roles.add(role);
+    }
+    if (wins >= 20) { // فائز ذهبي
+        const role = member.guild.roles.cache.get("1044949646079967252");
+        if (role && member.roles.cache.get(role.id))
+            member.roles.add(role);
+    }
+    if (wins >= 35) { // فائز بلاتيني
+        const role = member.guild.roles.cache.get("1044949746529357869");
+        if (role && member.roles.cache.get(role.id))
+            member.roles.add(role);
+    }
+}
+function GiveXp(member) {
+    if (member.roles.cache.get("1044949746529357869"))
+        return 3; // فائز بلاتيني
+    if (member.roles.cache.get("1044949646079967252"))
+        return 2.5; // فائز ذهبي
+    if (member.roles.cache.get("1044949538273771562"))
+        return 2; // فائز فضي
+    if (member.roles.cache.get("1044949411953901578"))
+        return 1.5; // فائز برونزي
+    return 1;
 }
 exports.default = new Command_1.Command({
     name: "contest-winners",
@@ -76,7 +85,7 @@ exports.default = new Command_1.Command({
             if (member) {
                 if (member.wins < number) {
                     yield members_1.Contest.updateOne({ memberId: id }, { wins: member.wins + 1 });
-                    yield GiveRole(guildMember, member.wins);
+                    GiveRole(guildMember, member.wins);
                 }
             }
             else {
@@ -87,13 +96,15 @@ exports.default = new Command_1.Command({
                 });
                 yield newMember.save();
             }
-            winners += `C: ${(0, discord_js_1.userMention)(id)}\n`;
+            const xp = 100 * GiveXp(guildMember);
+            yield index_1.lvlsys.AddXp(id, xp);
+            winners += `**C:** ${(0, discord_js_1.userMention)(id)}, **XP:** ${xp}\n`;
         }
         const allContestants = yield members_1.Contest.find({});
         let notActive = 0;
         for (let i = 0; i < allContestants.length; i++) {
             const contestant = allContestants[i];
-            if (number - contestant.wins >= 3) {
+            if (number - contestant.wins >= 3 && !ids.includes(contestant.memberId)) {
                 notActive += 1;
                 index_1.config.LogChannel(`العضو ${(0, discord_js_1.userMention)(contestant.memberId)} ليس مشارك من 3 مسابقات، قم بإنقاص رتبته`);
             }

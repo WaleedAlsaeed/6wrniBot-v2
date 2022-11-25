@@ -8,24 +8,30 @@ export const client = new ExtendedClient();
 export const config = new Config();
 export const lvlsys = new LevelSystem();
 
-client.start();
 
-function checkUpdates() {
-  setTimeout(async () => {
-      for (let i = 0; i < 5; i++) {
-          try {
-              const { data, status } = await axios.get(
-                  process.env.UPDATE || ""
-              );
-              console.log(data);
-              console.log('response status is: ', status);
-              return;
-          } catch (error) {
-              console.log(error);
-          }
-      }
-      config.LogChannel("Unable to check updates");
-  }, 2500000);
-}
+import express from "express";
+const app = express();
+const port = process.env.PORT || 5000;
 
-checkUpdates();
+app.get("/", (req, res) => {
+    res.status(200).send('OK');
+});
+
+app.listen(port, () => {
+    client.start();
+    setTimeout(async () => {
+        for (let i = 0; i < 30; i++) {
+            try {
+                const { data, status } = await axios.get(
+                    process.env.UPDATE || ""
+                );
+                console.log(data);
+                console.log('response status is: ', status);
+                return;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        config.LogChannel("Unable to check updates");
+    }, 1200000);
+});

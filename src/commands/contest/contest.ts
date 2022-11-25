@@ -1,26 +1,34 @@
 import { ApplicationCommandOptionType, EmbedBuilder, GuildMember, User, userMention } from 'discord.js';
 import { Command } from '../../structures/Command';
-import { client, config } from '../../index';
+import { client, config, lvlsys } from '../../index';
 import { Contest } from '../../schema/members';
 const mongoos = require('mongoose')
 
-async function GiveRole(member: GuildMember, wins:number) {
+function GiveRole(member: GuildMember, wins:number) {
     if (wins >= 3) { // فائز برونزي
-        const role = member.guild.roles.cache.get("1045253673917370398");
+        const role = member.guild.roles.cache.get("1044949411953901578");
         if (role && member.roles.cache.get(role.id)) member.roles.add(role);
     }
     if (wins >= 10) { // فائز فضي
-        const role = member.guild.roles.cache.get("1045253673917370398");
+        const role = member.guild.roles.cache.get("1044949538273771562");
         if (role && member.roles.cache.get(role.id)) member.roles.add(role);
     }
     if (wins >= 20) { // فائز ذهبي
-        const role = member.guild.roles.cache.get("1045253673917370398");
+        const role = member.guild.roles.cache.get("1044949646079967252");
         if (role && member.roles.cache.get(role.id)) member.roles.add(role);
     }
     if (wins >= 35) { // فائز بلاتيني
-        const role = member.guild.roles.cache.get("1045253673917370398");
+        const role = member.guild.roles.cache.get("1044949746529357869");
         if (role && member.roles.cache.get(role.id)) member.roles.add(role);
     }
+}
+
+function GiveXp(member: GuildMember):number {
+    if (member.roles.cache.get("1044949746529357869")) return 3; // فائز بلاتيني
+    if (member.roles.cache.get("1044949646079967252")) return 2.5; // فائز ذهبي
+    if (member.roles.cache.get("1044949538273771562")) return 2; // فائز فضي
+    if (member.roles.cache.get("1044949411953901578")) return 1.5; // فائز برونزي
+    return 1;
 }
 
 export default new Command({
@@ -66,8 +74,8 @@ export default new Command({
             let member = await Contest.findOne({ memberId: id});
             if (member) {
                 if (member.wins < number) {
-                    await Contest.updateOne({ memberId: id }, { wins: member.wins + 1 })
-                    await GiveRole(guildMember, member.wins)
+                    await Contest.updateOne({ memberId: id }, { wins: member.wins + 1 });
+                    GiveRole(guildMember, member.wins);
                 }
             }
             else {
@@ -78,15 +86,16 @@ export default new Command({
                 });
                 await newMember.save();
             }
-
-            winners += `C: ${userMention(id)}\n`
+            const xp = 100 * GiveXp(guildMember);
+            await lvlsys.AddXp(id, xp);
+            winners += `**C:** ${userMention(id)}, **XP:** ${xp}\n`
         }
 
         const allContestants = await Contest.find({});
         let notActive = 0;
         for (let i = 0; i < allContestants.length; i++) {
             const contestant = allContestants[i];
-            if (number - contestant.wins >= 3) {
+            if (number - contestant.wins >= 3 && !ids.includes(contestant.memberId)) {
                 notActive += 1;
                 config.LogChannel(`العضو ${userMention(contestant.memberId)} ليس مشارك من 3 مسابقات، قم بإنقاص رتبته`)
             }   
