@@ -18,6 +18,7 @@ const mSecToSec = (ms) => {
     return Math.trunc(ms / 1000);
 };
 exports.default = new Event_1.Event(discord_js_1.Events.GuildMemberAdd, (member) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     const embed = new discord_js_1.EmbedBuilder()
         .setTitle("[انضمام عضو]")
         .setColor(index_1.config.DEFAULT_COLOR)
@@ -41,4 +42,6 @@ exports.default = new Event_1.Event(discord_js_1.Events.GuildMemberAdd, (member)
     const role = member.guild.roles.cache.get("731608244606337076");
     if (role && !member.roles.cache.get(role.id))
         member.roles.add(role);
+    const membersCount = member.guild.memberCount;
+    (_a = member.guild.channels.cache.get("878366062767398952")) === null || _a === void 0 ? void 0 : _a.edit({ name: membersCount.toString() }).catch(index_1.config.LogChannel);
 }));

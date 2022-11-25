@@ -41,6 +41,8 @@ export default new Event(
 
         const role = member.guild.roles.cache.get("731608244606337076");
         if (role && !member.roles.cache.get(role.id)) member.roles.add(role);
-    }
 
+        const membersCount = member.guild.memberCount;
+        member.guild.channels.cache.get("878366062767398952")?.edit({ name: membersCount.toString() }).catch(config.LogChannel)
+    }
 );
