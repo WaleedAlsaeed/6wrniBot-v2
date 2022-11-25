@@ -9,32 +9,25 @@ export const config = new Config();
 export const lvlsys = new LevelSystem();
 
 
-import express from "express";
-const app = express();
-const port = process.env.PORT || 5000;
 
-app.get("/", (req, res) => {
-    res.status(200).send('OK');
-    
-});
+client.start();
 
-app.listen(port, () => {
-    console.log("Listen in port: " + port);
-    client.start();
-});
-
-setTimeout(async () => {
-    for (let i = 0; i < 30; i++) {
-        try {
-            const { data, status } = await axios.get(
-                process.env.UPDATE || ""
-            );
-            console.log(data);
-            console.log('response status is: ', status);
-            return;
-        } catch (error) {
-            console.log(error);
+function checkUpdates() {
+    setTimeout(async () => {
+        for (let i = 0; i < 5; i++) {
+            try {
+                const { data, status } = await axios.get(
+                    process.env.UPDATE || ""
+                );
+                console.log(data);
+                console.log('response status is: ', status);
+                return;
+            } catch (error) {
+                console.log(error);
+            }
         }
-    }
-    config.LogChannel("Unable to check updates");
-}, 1200000);
+        config.LogChannel("Unable to check updates");
+    }, 2500000);
+}
+
+checkUpdates();
