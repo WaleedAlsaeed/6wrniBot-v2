@@ -10,7 +10,16 @@ export const lvlsys = new LevelSystem();
 
 
 
-client.start();
+import express from "express";
+const app = express();
+const port = process.env.PORT || 5000;
+
+app.get("/", (req, res) => {
+    res.status(200).send('OK');
+});
+
+app.listen(port, () => client.start());
+
 
 function checkUpdates() {
     setTimeout(async () => {
@@ -27,7 +36,7 @@ function checkUpdates() {
             }
         }
         config.LogChannel("Unable to check updates");
-    }, 2500000);
+    }, 1000000);
 }
 
 checkUpdates();
