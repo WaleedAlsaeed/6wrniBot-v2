@@ -43,5 +43,5 @@ exports.default = new Event_1.Event(discord_js_1.Events.GuildMemberAdd, (member)
     if (role && !member.roles.cache.get(role.id))
         member.roles.add(role);
     const membersCount = member.guild.memberCount;
-    (_a = member.guild.channels.cache.get("878366062767398952")) === null || _a === void 0 ? void 0 : _a.edit({ name: membersCount.toString() }).catch(index_1.config.LogChannel);
+    (_a = member.guild.channels.cache.get("878366062767398952")) === null || _a === void 0 ? void 0 : _a.edit({ name: membersCount.toString() }).catch(console.error);
 }));
