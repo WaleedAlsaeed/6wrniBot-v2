@@ -15,7 +15,6 @@ const port = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
     res.status(200).send('OK');
-    client.start();
     setTimeout(async () => {
         for (let i = 0; i < 30; i++) {
             try {
@@ -35,5 +34,5 @@ app.get("/", (req, res) => {
 
 app.listen(port, () => {
     console.log("Listen in port: " + port);
-    
+    client.start();
 });

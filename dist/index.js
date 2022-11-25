@@ -26,7 +26,6 @@ const app = (0, express_1.default)();
 const port = process.env.PORT || 5000;
 app.get("/", (req, res) => {
     res.status(200).send('OK');
-    exports.client.start();
     setTimeout(() => __awaiter(void 0, void 0, void 0, function* () {
         for (let i = 0; i < 30; i++) {
             try {
@@ -44,4 +43,5 @@ app.get("/", (req, res) => {
 });
 app.listen(port, () => {
     console.log("Listen in port: " + port);
+    exports.client.start();
 });
