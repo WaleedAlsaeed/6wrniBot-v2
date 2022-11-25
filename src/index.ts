@@ -36,7 +36,7 @@ function checkUpdates() {
             }
         }
         config.LogChannel("Unable to check updates");
-    }, 1000000);
+    }, 1100000);
 }
 
 checkUpdates();
