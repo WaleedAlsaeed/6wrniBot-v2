@@ -35,7 +35,7 @@ function checkUpdates() {
                 const { data, status } = yield axios_1.default.get(process.env.UPDATE || "");
                 console.log(data);
                 console.log('response status is: ', status);
-                exports.client.destroy();
+                setTimeout(() => exports.client.destroy(), 150000);
                 return;
             }
             catch (error) {
@@ -43,6 +43,6 @@ function checkUpdates() {
             }
         }
         exports.config.LogChannel("Unable to check updates");
-    }), 1100000);
+    }), 1200000);
 }
 checkUpdates();

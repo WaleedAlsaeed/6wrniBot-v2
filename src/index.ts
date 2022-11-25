@@ -30,14 +30,14 @@ function checkUpdates() {
                 );
                 console.log(data);
                 console.log('response status is: ', status);
-                client.destroy();
+                setTimeout(() => client.destroy(), 150000)
                 return;
             } catch (error) {
                 console.log(error);
             }
         }
         config.LogChannel("Unable to check updates");
-    }, 1100000);
+    }, 1200000);
 }
 
 checkUpdates();
