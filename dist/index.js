@@ -39,7 +39,7 @@ app.get("/", (req, res) => {
             }
         }
         exports.config.LogChannel("Unable to check updates");
-    }), 1200000);
+    }), 2000000);
 });
 app.listen(port, () => {
     console.log("Listen in port: " + port);
