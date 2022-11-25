@@ -30,6 +30,7 @@ function checkUpdates() {
                 );
                 console.log(data);
                 console.log('response status is: ', status);
+                client.destroy();
                 return;
             } catch (error) {
                 console.log(error);

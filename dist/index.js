@@ -35,6 +35,7 @@ function checkUpdates() {
                 const { data, status } = yield axios_1.default.get(process.env.UPDATE || "");
                 console.log(data);
                 console.log('response status is: ', status);
+                exports.client.destroy();
                 return;
             }
             catch (error) {
