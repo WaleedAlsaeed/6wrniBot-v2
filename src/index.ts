@@ -19,7 +19,10 @@ app.get("/", (req, res) => {
   res.status(200).send('OK');
 });
 
-app.listen(port, () => client.start());
+app.listen(port, () => {
+  client.start();
+  setInterval(restartBot, 1200000);
+});
 
 function restartBot() {
   console.log("==> [Bot Status]: Restarting Bot...");
@@ -28,4 +31,3 @@ function restartBot() {
   client.start();
   console.log("==> [Bot Status]: Done Restarting Bot...");
 }
-setInterval(restartBot, 1200000);
