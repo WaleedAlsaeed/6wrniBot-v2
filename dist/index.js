@@ -21,6 +21,7 @@ app.listen(port, () => exports.client.start());
 setInterval(() => {
     console.log("==> [Bot Status]: Restarting Bot...");
     exports.client.destroy();
+    exports.client = new Client_1.ExtendedClient();
     exports.client.start();
     console.log("==> [Bot Status]: Done Restarting Bot...");
 }, 1200000);

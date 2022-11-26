@@ -3,7 +3,7 @@ import { ExtendedClient } from './structures/Client';
 import { Config } from './config/consts';
 import { LevelSystem } from './config/LevelSystem';
 
-export const client = new ExtendedClient();
+export let client = new ExtendedClient();
 export const config = new Config();
 export const lvlsys = new LevelSystem();
 
@@ -22,6 +22,7 @@ app.listen(port, () => client.start());
 setInterval(() => {
   console.log("==> [Bot Status]: Restarting Bot...");
   client.destroy();
+  client = new ExtendedClient();
   client.start();
   console.log("==> [Bot Status]: Done Restarting Bot...");
 }, 1200000);
