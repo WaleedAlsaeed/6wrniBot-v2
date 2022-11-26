@@ -8,7 +8,6 @@ require('dotenv').config();
 const Client_1 = require("./structures/Client");
 const consts_1 = require("./config/consts");
 const LevelSystem_1 = require("./config/LevelSystem");
-var cron = require('node-cron');
 exports.client = new Client_1.ExtendedClient();
 exports.config = new consts_1.Config();
 exports.lvlsys = new LevelSystem_1.LevelSystem();
@@ -19,9 +18,9 @@ app.get("/", (req, res) => {
     res.status(200).send('OK');
 });
 app.listen(port, () => exports.client.start());
-cron.schedule('19 * * * *', () => {
-    console.log('==> [Status]: Restart BOT...');
+setInterval(() => {
+    console.log("==> [Bot Status]: Restarting Bot...");
     exports.client.destroy();
     exports.client.start();
-    console.log('==> [Status]: Done.');
-});
+    console.log("==> [Bot Status]: Done Restarting Bot...");
+}, 1200000);
