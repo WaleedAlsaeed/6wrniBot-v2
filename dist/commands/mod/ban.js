@@ -32,6 +32,7 @@ exports.default = new Command_1.Command({
     ],
     run: ({ interaction }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
+        const client = (0, index_1.getClient)();
         if (!index_1.config.isModOrOwner(interaction.member)) {
             yield interaction.followUp({ content: "ليس لديك صلاحية استخدام الأمر!" });
             return;
@@ -62,7 +63,7 @@ exports.default = new Command_1.Command({
             .addFields({ name: "السبب:", value: reason })
             .setFooter({ text: `${interaction.user.tag} | ${interaction.createdAt}`, iconURL: interaction.user.displayAvatarURL() });
         yield interaction.followUp({ embeds: [embed] });
-        const modLog = index_1.client.channels.cache.get(index_1.config.MOD_LOG);
+        const modLog = client.channels.cache.get(index_1.config.MOD_LOG);
         if (modLog === null || modLog === void 0 ? void 0 : modLog.isTextBased())
             modLog.send({ embeds: [embed] });
     }),

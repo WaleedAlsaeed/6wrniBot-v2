@@ -29,7 +29,7 @@ class Config {
             return member.roles.highest.id == this.MOD_ROLE || member.id == this.OWNER_ID || member.user.bot;
         };
         this.LogChannel = (message) => {
-            const modLog = __1.client.channels.cache.get(this.MOD_LOG);
+            const modLog = (0, __1.getClient)().channels.cache.get(this.MOD_LOG);
             if (modLog === null || modLog === void 0 ? void 0 : modLog.isTextBased())
                 modLog.send({ content: message });
         };

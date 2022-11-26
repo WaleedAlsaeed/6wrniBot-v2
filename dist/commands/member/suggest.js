@@ -37,6 +37,7 @@ exports.default = new Command_1.Command({
     ],
     run: ({ interaction }) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
+        const client = (0, index_1.getClient)();
         const content = interaction.options.getString("content", true);
         const image = interaction.options.getAttachment("image", false);
         if (content.length < 10) {
@@ -57,7 +58,7 @@ exports.default = new Command_1.Command({
                 return yield interaction.followUp({ content: "الصيغ المدعومة هي png/jpg/jpeg/webp فقط!" });
             }
         }
-        const suggestChannel = index_1.client.channels.cache.get(index_1.config.SUGGEST_CHANNEL);
+        const suggestChannel = client.channels.cache.get(index_1.config.SUGGEST_CHANNEL);
         yield suggestChannel.send({ embeds: [embed] });
         yield interaction.followUp({ content: "تم إرسال الإقتراح!" });
     }),

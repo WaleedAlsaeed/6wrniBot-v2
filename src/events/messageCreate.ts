@@ -1,6 +1,6 @@
 import { ChannelType, Events, Message, TextBasedChannel } from "discord.js";
 import { Event } from "../structures/Event"
-import { client, config, lvlsys } from '../index';
+import { getClient, config, lvlsys } from '../index';
 import xpChannels from "../config/xp_channels_rate.json";
 
 
@@ -17,6 +17,7 @@ function isValidUrl(str: string) {
 export default new Event(
     Events.MessageCreate,
     async (message) => {
+        const client = getClient();
         if (!message.member || !message.author)
             return;
         if (message.channelId == "675750619784413184") // SPAM Channel

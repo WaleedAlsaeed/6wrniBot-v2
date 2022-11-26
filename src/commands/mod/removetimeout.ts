@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, AutocompleteInteraction, Interaction, EmbedBuilder, userMention } from 'discord.js';
 import { Command } from '../../structures/Command';
-import { client, config } from '../../index';
+import { getClient, config } from '../../index';
 
 export default new Command({
     name: "untimeout",
@@ -21,7 +21,7 @@ export default new Command({
         },
     ],
     run: async ({ interaction }) => {
-        
+        const client = getClient();
         if(!config.isModOrOwner(interaction.member)){
             await interaction.followUp({ content: "ليس لديك صلاحية استخدام الأمر!"});
             return;

@@ -15,9 +15,10 @@ const discord_js_1 = require("discord.js");
 const index_1 = require("../index");
 exports.default = new Event_1.Event(discord_js_1.Events.InteractionCreate, (interaction) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
+    const client = (0, __1.getClient)();
     if (interaction.isChatInputCommand()) {
         yield interaction.deferReply();
-        const command = __1.client.commands.get(interaction.commandName);
+        const command = client.commands.get(interaction.commandName);
         if (!command)
             return yield interaction.followUp('تعذر ايجاد الأمر');
         if (command.onlyInCommandChannel) {
@@ -28,7 +29,7 @@ exports.default = new Event_1.Event(discord_js_1.Events.InteractionCreate, (inte
         try {
             yield command.run({
                 args: interaction.options,
-                client: __1.client,
+                client,
                 interaction: interaction
             });
         }
@@ -42,11 +43,11 @@ exports.default = new Event_1.Event(discord_js_1.Events.InteractionCreate, (inte
         }
     }
     else if (interaction.isAutocomplete()) {
-        const command = __1.client.commands.get(interaction.commandName);
+        const command = client.commands.get(interaction.commandName);
         if (!command)
             return;
         try {
-            (_b = command.autocomplete) === null || _b === void 0 ? void 0 : _b.call(command, interaction, __1.client);
+            (_b = command.autocomplete) === null || _b === void 0 ? void 0 : _b.call(command, interaction, client);
         }
         catch (error) {
             console.error(error);
@@ -54,7 +55,7 @@ exports.default = new Event_1.Event(discord_js_1.Events.InteractionCreate, (inte
     }
     else if (interaction.isButton()) {
         const { customId } = interaction;
-        const { buttons } = __1.client;
+        const { buttons } = client;
         const button = buttons.get(customId);
         if (!button)
             return;

@@ -1,10 +1,11 @@
 import { EmbedBuilder, GuildMember, PartialGuildMember, TextBasedChannel, userMention } from "discord.js";
 import { Event } from "../structures/Event"
-import { client, config, lvlsys } from '../index';
+import { getClient, config, lvlsys } from '../index';
 
 export default new Event(
     "guildMemberRemove",
     async (member: GuildMember | PartialGuildMember) => {
+        const client = getClient();
         const embed = new EmbedBuilder()
             .setTitle("[خروج عضو]")
             .setColor(config.DEFAULT_COLOR)

@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, EmbedBuilder, User, userMention } from 'discord.js';
 import { Command } from '../../structures/Command';
-import { lvlsys, config, client } from '../../index';
+import { lvlsys, config, getClient } from '../../index';
 import { channel } from 'diagnostics_channel';
 
 
@@ -47,6 +47,8 @@ export default new Command({
         },
     ],
     run: async ({ interaction }) => {
+        const client = getClient();
+        
         const name = interaction.options.getString("name", true);
         const email = interaction.options.getString("email", true);
         const theJob = interaction.options.getString("the-job", true);

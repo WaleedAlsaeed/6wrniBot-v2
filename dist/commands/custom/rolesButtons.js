@@ -31,13 +31,14 @@ exports.default = new Command_1.Command({
         },
     ],
     run: ({ interaction }) => __awaiter(void 0, void 0, void 0, function* () {
+        const client = (0, index_1.getClient)();
         if (!index_1.config.isModOrOwner(interaction.member)) {
             yield interaction.reply({ content: "ليس لديك صلاحية استخدام الأمر!" });
             return;
         }
         let channel = interaction.options.getChannel("channel", true);
         const content = interaction.options.getString("content", true);
-        const chnl = index_1.client.channels.cache.get(channel.id);
+        const chnl = client.channels.cache.get(channel.id);
         if (chnl === null || chnl === void 0 ? void 0 : chnl.isTextBased()) {
             yield interaction.followUp("يتم العمل على ذلك");
             const unity = new discord_js_1.ButtonBuilder()

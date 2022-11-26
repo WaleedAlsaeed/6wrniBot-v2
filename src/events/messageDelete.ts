@@ -1,6 +1,6 @@
 import { EmbedBuilder, Message, PartialMessage, TextBasedChannel, userMention, Events } from 'discord.js';
 import { Event } from "../structures/Event"
-import { client, config } from '../index';
+import { getClient, config } from '../index';
 
 const mSecToSec = (ms: number | null) => {
     if (!ms)
@@ -11,7 +11,7 @@ const mSecToSec = (ms: number | null) => {
 export default new Event(
     Events.MessageDelete,
     async (message: Message<boolean> | PartialMessage) => {
-
+        const client = getClient();
         if (!message.member || !message.content)
             return;
         if (config.isModOrOwner(message.member))

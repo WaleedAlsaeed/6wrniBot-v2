@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, EmbedBuilder, GuildMember, User, userMention } from 'discord.js';
 import { Command } from '../../structures/Command';
-import { client, config, lvlsys } from '../../index';
+import { config, lvlsys } from '../../index';
 import { Contest } from '../../schema/members';
 const mongoos = require('mongoose')
 

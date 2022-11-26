@@ -1,11 +1,11 @@
 import { Event } from "../structures/Event";
-import { client } from "..";
+import { getClient } from "..";
 import { channelMention, CommandInteractionOptionResolver, Events } from "discord.js";
 import { ExtendedInteraction } from "../typings/Command";
 import { config } from '../index';
 
 export default new Event(Events.InteractionCreate, async (interaction) => {
-
+    const client = getClient();
     if (interaction.isChatInputCommand()) {
         await interaction.deferReply();
         const command = client.commands.get(interaction.commandName);

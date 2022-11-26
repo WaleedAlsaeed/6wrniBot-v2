@@ -12,7 +12,7 @@ import { Event, DataBaseEvent } from './Event';
 import fs from 'fs';
 import { connect, connection } from 'mongoose';
 import { RoleButton } from './Button';
-import { client, lvlsys, config } from '../index';
+import { config } from '../index';
 
 
 export class ExtendedClient extends Client {

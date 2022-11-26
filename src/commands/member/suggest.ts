@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, EmbedBuilder, TextBasedChannel, User, userMention } from 'discord.js';
 import { Command } from '../../structures/Command';
-import { lvlsys, config, client } from '../../index';
+import { config, getClient } from '../../index';
 
 function mSecToSec(ms: number | null) {
     if (!ms)
@@ -27,7 +27,7 @@ export default new Command({
         }
     ],
     run: async ({ interaction }) => {
-
+        const client = getClient();
         const content = interaction.options.getString("content", true);
         const image = interaction.options.getAttachment("image", false);
 

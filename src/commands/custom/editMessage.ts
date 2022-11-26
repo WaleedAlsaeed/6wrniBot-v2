@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, EmbedBuilder, User, userMention, ChannelType, TextBasedChannel, TextBasedChannelMixin } from 'discord.js';
 import { Command } from '../../structures/Command';
-import { client, config } from '../../index';
+import { getClient, config } from '../../index';
 
 function isValidMsgUrl(str: string) {
     let url: URL;
@@ -32,7 +32,7 @@ export default new Command({
         },
     ],
     run: async ({ interaction }) => {
-
+        const client = getClient();
         if (!config.isModOrOwner(interaction.member)) {
             await interaction.reply({ content: "ليس لديك صلاحية استخدام الأمر!" });
             return;

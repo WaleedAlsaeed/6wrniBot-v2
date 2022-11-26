@@ -28,6 +28,7 @@ function isValidUrl(str) {
 }
 exports.default = new Event_1.Event(discord_js_1.Events.MessageCreate, (message) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
+    const client = (0, index_1.getClient)();
     if (!message.member || !message.author)
         return;
     if (message.channelId == "675750619784413184") // SPAM Channel
@@ -46,7 +47,7 @@ exports.default = new Event_1.Event(discord_js_1.Events.MessageCreate, (message)
                 if (index_1.config.isModOrOwner(message.member))
                     return;
                 message.delete();
-                const messageChannel = index_1.client.channels.cache.get(message.channelId);
+                const messageChannel = client.channels.cache.get(message.channelId);
                 const warn = messageChannel.send({ content: "**مسموح فقط بالصور والروابط في هذه القناة!!**\nالردود تكون في الثريد" });
                 setTimeout(() => warn.then((msg) => msg.delete()), 4000);
                 return;

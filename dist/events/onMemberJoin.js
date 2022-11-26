@@ -19,6 +19,7 @@ const mSecToSec = (ms) => {
 };
 exports.default = new Event_1.Event(discord_js_1.Events.GuildMemberAdd, (member) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
+    const client = (0, index_1.getClient)();
     const embed = new discord_js_1.EmbedBuilder()
         .setTitle("[انضمام عضو]")
         .setColor(index_1.config.DEFAULT_COLOR)
@@ -32,12 +33,12 @@ exports.default = new Event_1.Event(discord_js_1.Events.GuildMemberAdd, (member)
         value: `<t:${mSecToSec(member.joinedTimestamp)}:f> (<t:${mSecToSec(member.joinedTimestamp)}:R>)`
     })
         .setFooter({ text: `ID: ${member.id}` });
-    const modLog = index_1.client.channels.cache.get(index_1.config.MOD_LOG);
+    const modLog = client.channels.cache.get(index_1.config.MOD_LOG);
     modLog.send({ embeds: [embed] });
     var welcomeMessage = `أهلا بك ${(0, discord_js_1.userMention)(member.id)} في سيرفر طورني.`;
     welcomeMessage += `\nلا تنسى قراءة ${(0, discord_js_1.channelMention)(index_1.config.RULES_CHANNEL)}، `;
     welcomeMessage += `والإطلاع على ${(0, discord_js_1.channelMention)(index_1.config.ALL_CHANNELS)} للتعرف على أقسام السيرفر`;
-    const welcome = index_1.client.channels.cache.get(index_1.config.WELCOME_CHANNEL);
+    const welcome = client.channels.cache.get(index_1.config.WELCOME_CHANNEL);
     welcome.send({ content: welcomeMessage });
     const role = member.guild.roles.cache.get("731608244606337076");
     if (role && !member.roles.cache.get(role.id))

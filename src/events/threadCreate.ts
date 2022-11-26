@@ -1,6 +1,5 @@
-import { ChannelType, Events, Message, TextBasedChannel } from "discord.js";
+import { Events } from "discord.js";
 import { Event } from "../structures/Event"
-import { client, config, lvlsys } from '../index';
 import xpChannels from "../config/xp_channels_rate.json";
 
 

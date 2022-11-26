@@ -43,6 +43,7 @@ exports.default = new Command_1.Command({
         },
     ],
     run: ({ interaction }) => __awaiter(void 0, void 0, void 0, function* () {
+        const client = (0, index_1.getClient)();
         if (!index_1.config.isModOrOwner(interaction.member)) {
             yield interaction.reply({ content: "ليس لديك صلاحية استخدام الأمر!" });
             return;
@@ -52,13 +53,13 @@ exports.default = new Command_1.Command({
         let ids = isValidMsgUrl(msgLink).split("/").reverse();
         const msgId = ids[0];
         const channelId = ids[1];
-        const channel = index_1.client.channels.cache.get(channelId);
+        const channel = client.channels.cache.get(channelId);
         if (!(channel === null || channel === void 0 ? void 0 : channel.isTextBased()))
             return yield interaction.followUp("لا يمكن تعديل الرسالة في هذه القناة");
         yield channel.messages.fetch(msgId)
             .then((message) => __awaiter(void 0, void 0, void 0, function* () {
             var _a;
-            if (message.author.id == ((_a = index_1.client.user) === null || _a === void 0 ? void 0 : _a.id)) {
+            if (message.author.id == ((_a = client.user) === null || _a === void 0 ? void 0 : _a.id)) {
                 if (message.embeds.length > 0) {
                     const embed = new discord_js_1.EmbedBuilder()
                         .setColor(index_1.config.DEFAULT_COLOR)

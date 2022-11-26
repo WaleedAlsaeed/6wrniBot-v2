@@ -1,8 +1,7 @@
 import { GuildMember } from 'discord.js';
-import { client } from "..";
+import { getClient } from "..";
 
 export class Config {
-
     // <-------------- Emojis -------------->
     LIKE_EMOJI = "725771517043933304"
 
@@ -35,7 +34,7 @@ export class Config {
     }
 
     LogChannel = (message: string) => {
-        const modLog = client.channels.cache.get(this.MOD_LOG);
+        const modLog = getClient().channels.cache.get(this.MOD_LOG);
         if (modLog?.isTextBased()) modLog.send({ content: message });
     }
 }

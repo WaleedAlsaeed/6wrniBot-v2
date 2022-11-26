@@ -1,6 +1,6 @@
 import { channelMention, EmbedBuilder, GuildMember, TextBasedChannel, userMention, Events } from 'discord.js';
 import { Event } from "../structures/Event"
-import { client, config } from '../index';
+import { getClient, config } from '../index';
 
 
 const mSecToSec = (ms: number | null) => {
@@ -12,6 +12,7 @@ const mSecToSec = (ms: number | null) => {
 export default new Event(
     Events.GuildMemberAdd,
     async (member: GuildMember) => {
+        const client = getClient();
         const embed = new EmbedBuilder()
             .setTitle("[انضمام عضو]")
             .setColor(config.DEFAULT_COLOR)

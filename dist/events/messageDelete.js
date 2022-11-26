@@ -18,6 +18,7 @@ const mSecToSec = (ms) => {
     return Math.trunc(ms / 1000);
 };
 exports.default = new Event_1.Event(discord_js_1.Events.MessageDelete, (message) => __awaiter(void 0, void 0, void 0, function* () {
+    const client = (0, index_1.getClient)();
     if (!message.member || !message.content)
         return;
     if (index_1.config.isModOrOwner(message.member))
@@ -27,6 +28,6 @@ exports.default = new Event_1.Event(discord_js_1.Events.MessageDelete, (message)
         .setDescription(`حذف ${(0, discord_js_1.userMention)(message.member.id)} رسالة في ${message.channel.toString()}`)
         .setColor(index_1.config.DEFAULT_COLOR)
         .addFields({ name: "تاريخ الإرسال:", value: `<t:${mSecToSec(message.createdTimestamp)}:f>` }, { name: "المحتوى:", value: message.content });
-    const deletedMessages = index_1.client.channels.cache.get(index_1.config.DELETED_MESSAGES_CHANNEL);
+    const deletedMessages = client.channels.cache.get(index_1.config.DELETED_MESSAGES_CHANNEL);
     deletedMessages.send({ embeds: [embed] });
 }));

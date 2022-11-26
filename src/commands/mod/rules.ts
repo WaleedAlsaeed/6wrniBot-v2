@@ -1,6 +1,5 @@
 import { ApplicationCommandOptionType, Collection, userMention } from 'discord.js';
 import { Command } from '../../structures/Command';
-import { client, config } from '../../index';
 
 
 export default new Command({

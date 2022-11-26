@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, AutocompleteInteraction, Interaction, EmbedBuilder, userMention } from 'discord.js';
 import { Command } from '../../structures/Command';
-import { client, config, lvlsys } from '../../index';
+import { config, lvlsys } from '../../index';
 
 export default new Command({
     name: "remove-xp",
