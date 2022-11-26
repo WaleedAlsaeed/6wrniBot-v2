@@ -2,7 +2,7 @@ require('dotenv').config();
 import { ExtendedClient } from './structures/Client';
 import { Config } from './config/consts';
 import { LevelSystem } from './config/LevelSystem';
-import axios from 'axios';
+var cron = require('node-cron');
 
 export const client = new ExtendedClient();
 export const config = new Config();
@@ -20,24 +20,9 @@ app.get("/", (req, res) => {
 
 app.listen(port, () => client.start());
 
-
-function checkUpdates() {
-    setTimeout(async () => {
-        for (let i = 0; i < 5; i++) {
-            try {
-                const { data, status } = await axios.get(
-                    process.env.UPDATE || ""
-                );
-                console.log(data);
-                console.log('response status is: ', status);
-                setTimeout(() => client.destroy(), 150000)
-                return;
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        config.LogChannel("Unable to check updates");
-    }, 1200000);
-}
-
-checkUpdates();
+cron.schedule('19 * * * *', () => {
+  console.log('==> [Status]: Restart BOT...');
+  client.destroy();
+  client.start();
+  console.log('==> [Status]: Done.');
+});
