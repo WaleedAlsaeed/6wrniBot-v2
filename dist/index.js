@@ -24,30 +24,17 @@ app.get("/", (req, res) => {
 });
 app.listen(port, () => {
     client.start();
-});
-var intervalID;
-var calls = 0;
-function restartBot(b, c) {
-    console.log(b, c);
-    calls++;
-    if (calls >= 72) {
-        stopAutoUpdate();
-    }
-    else {
-        console.log("==> [Bot Status]: Restarting Bot...");
-        client.destroy();
-        client = new Client_1.ExtendedClient();
-        client.start();
-    }
-}
-function autoUpdate() {
-    intervalID = setInterval(function () {
-        restartBot(intervalID, calls);
+    setTimeout(() => {
+        for (let i = 0; i < 40; i++) {
+            try {
+                axios_1.default.get(process.env.UPDATE || "");
+                client.destroy();
+                return;
+            }
+            catch (error) {
+                console.error(error);
+                exports.config.LogChannel(`${error}`);
+            }
+        }
     }, 1200000);
-}
-function stopAutoUpdate() {
-    clearInterval(intervalID);
-    axios_1.default.get(process.env.UPDATE || "");
-    console.log('Done');
-}
-autoUpdate();
+});
