@@ -16,6 +16,7 @@ function getClient() {
 }
 exports.getClient = getClient;
 const express_1 = __importDefault(require("express"));
+const axios_1 = __importDefault(require("axios"));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 5000;
 app.get("/", (req, res) => {
@@ -24,9 +25,29 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
     client.start();
 });
-setInterval(function () {
-    console.log("==> [Bot Status]: Restarting Bot...");
-    client.destroy();
-    client = new Client_1.ExtendedClient();
-    client.start();
-}, 1200000);
+var intervalID;
+var calls = 0;
+function restartBot(b, c) {
+    console.log(b, c);
+    calls++;
+    if (calls >= 72) {
+        stopAutoUpdate();
+    }
+    else {
+        console.log("==> [Bot Status]: Restarting Bot...");
+        client.destroy();
+        client = new Client_1.ExtendedClient();
+        client.start();
+    }
+}
+function autoUpdate() {
+    intervalID = setInterval(function () {
+        restartBot(intervalID, calls);
+    }, 1200000);
+}
+function stopAutoUpdate() {
+    clearInterval(intervalID);
+    axios_1.default.get(process.env.UPDATE || "");
+    console.log('Done');
+}
+autoUpdate();
