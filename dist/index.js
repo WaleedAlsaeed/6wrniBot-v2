@@ -23,12 +23,10 @@ app.get("/", (req, res) => {
 });
 app.listen(port, () => {
     client.start();
-    setInterval(restartBot, 1200000);
 });
-function restartBot() {
+setInterval(function () {
     console.log("==> [Bot Status]: Restarting Bot...");
     client.destroy();
     client = new Client_1.ExtendedClient();
     client.start();
-    console.log("==> [Bot Status]: Done Restarting Bot...");
-}
+}, 1200000);
