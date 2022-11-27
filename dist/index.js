@@ -34,9 +34,14 @@ app.get("/", (req, res) => {
 app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
     client.start();
     yield sleep(600000);
-    yield axios_1.default.get(process.env.UPDATE || "");
+    console.log("[Bot Status]: Restarting Bot...");
+    let data;
+    while (!data) {
+        data = yield axios_1.default.get(process.env.UPDATE || "");
+    }
     yield sleep(20000);
     client.destroy();
+    console.log("[Bot Status]: Done Restarting Bot...");
 }));
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
