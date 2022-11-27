@@ -18,17 +18,18 @@ const port = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
   res.status(200).send('OK');
-  update();
 });
 
 app.listen(port, () => {
   client.start();
+  update();
 });
 
 function update() {
   setTimeout(async () => {
     client.destroy();
     client = new ExtendedClient();
-    client.start();  
+    client.start()
+    update();
   }, 40000);
 }

@@ -29,15 +29,16 @@ const app = (0, express_1.default)();
 const port = process.env.PORT || 5000;
 app.get("/", (req, res) => {
     res.status(200).send('OK');
-    update();
 });
 app.listen(port, () => {
     client.start();
+    update();
 });
 function update() {
     setTimeout(() => __awaiter(this, void 0, void 0, function* () {
         client.destroy();
         client = new Client_1.ExtendedClient();
         client.start();
+        update();
     }), 40000);
 }
