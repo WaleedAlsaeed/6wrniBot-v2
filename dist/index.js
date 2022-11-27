@@ -25,7 +25,6 @@ function getClient() {
 }
 exports.getClient = getClient;
 const express_1 = __importDefault(require("express"));
-const axios_1 = __importDefault(require("axios"));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 5000;
 app.get("/", (req, res) => {
@@ -37,17 +36,8 @@ app.listen(port, () => {
 });
 function update() {
     setTimeout(() => __awaiter(this, void 0, void 0, function* () {
-        console.log("[Bot Status]: Restarting Bot...");
-        for (let i = 0; i < 50; i++) {
-            let isDone = false;
-            yield axios_1.default.get(process.env.UPDATE || "")
-                .catch((err) => isDone = false)
-                .then((value) => isDone = true);
-            if (isDone) {
-                console.log("[Bot Status]: Done Restarting Bot...");
-                setTimeout(() => client.destroy(), 20000);
-                return;
-            }
-        }
+        client.destroy();
+        client = new Client_1.ExtendedClient();
+        client.start();
     }), 40000);
 }
