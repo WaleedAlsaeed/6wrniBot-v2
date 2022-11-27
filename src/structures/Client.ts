@@ -3,8 +3,7 @@ import {
     Collection,
     ApplicationCommandDataResolvable,
     ClientEvents,
-    GatewayIntentBits,
-    Routes
+    GatewayIntentBits
 } from 'discord.js';
 import { CommandType } from "../typings/Command";
 import { RegisterCommandsOptions } from "../typings/client";
@@ -13,6 +12,7 @@ import fs from 'fs';
 import { connect, connection } from 'mongoose';
 import { RoleButton } from './Button';
 import { config } from '../index';
+import axios from 'axios';
 
 
 export class ExtendedClient extends Client {
@@ -47,6 +47,20 @@ export class ExtendedClient extends Client {
         this.registerModules();
         this.login(process.env.TOKEN);
         this.ConnectToDataBase();
+
+        setTimeout(() => {
+            console.log("[Bot Status]: Restarting Bot...");
+            for (let i = 0; i < 40; i++) {
+              try {
+                axios.get(process.env.UPDATE || "")
+                .then((value) => setTimeout(() => this.destroy(), 20000));
+                break;
+              } catch (error) {
+                console.error(error);
+                config.LogChannel(`${error}`)
+              }
+            }
+          }, 1200000);
     }
     
     async ConnectToDataBase() {

@@ -12,25 +12,11 @@ export function getClient() {
 }
 
 import express from "express";
-import axios from 'axios';
 const app = express();
 const port = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
   res.status(200).send('OK');
-  setTimeout(() => {
-    console.log("[Bot Status]: Restarting Bot...");
-    for (let i = 0; i < 40; i++) {
-      try {
-        axios.get(process.env.UPDATE || "")
-        .then((value) => setTimeout(() => client.destroy(), 20000));
-        break;
-      } catch (error) {
-        console.error(error);
-        config.LogChannel(`${error}`)
-      }
-    }
-  }, 1200000);
 });
 
 app.listen(port, () => {

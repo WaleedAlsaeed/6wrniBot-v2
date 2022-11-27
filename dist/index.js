@@ -16,25 +16,10 @@ function getClient() {
 }
 exports.getClient = getClient;
 const express_1 = __importDefault(require("express"));
-const axios_1 = __importDefault(require("axios"));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 5000;
 app.get("/", (req, res) => {
     res.status(200).send('OK');
-    setTimeout(() => {
-        console.log("[Bot Status]: Restarting Bot...");
-        for (let i = 0; i < 40; i++) {
-            try {
-                axios_1.default.get(process.env.UPDATE || "")
-                    .then((value) => setTimeout(() => client.destroy(), 20000));
-                break;
-            }
-            catch (error) {
-                console.error(error);
-                exports.config.LogChannel(`${error}`);
-            }
-        }
-    }, 1200000);
 });
 app.listen(port, () => {
     client.start();
