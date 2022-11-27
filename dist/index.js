@@ -40,5 +40,5 @@ function update() {
         client = new Client_1.ExtendedClient();
         client.start();
         update();
-    }), 40000);
+    }), 600000);
 }
