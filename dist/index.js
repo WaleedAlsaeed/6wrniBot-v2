@@ -21,9 +21,6 @@ const app = (0, express_1.default)();
 const port = process.env.PORT || 5000;
 app.get("/", (req, res) => {
     res.status(200).send('OK');
-});
-app.listen(port, () => {
-    client.start();
     setTimeout(() => {
         console.log("[Bot Status]: Restarting Bot...");
         for (let i = 0; i < 40; i++) {
@@ -38,4 +35,7 @@ app.listen(port, () => {
             }
         }
     }, 1200000);
+});
+app.listen(port, () => {
+    client.start();
 });
