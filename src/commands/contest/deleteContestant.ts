@@ -6,7 +6,7 @@ import { type } from 'os';
 
 
 export default new Command({
-    name: "top-contestants",
+    name: "delete-contestant",
     description: "ترتيب المشاركين بالمسابقات",
     onlyInCommandChannel: false,
     options: [

@@ -14,6 +14,7 @@ const Event_1 = require("../structures/Event");
 const index_1 = require("../index");
 const members_1 = require("../schema/members");
 exports.default = new Event_1.Event("guildMemberRemove", (member) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     const client = (0, index_1.getClient)();
     const embed = new discord_js_1.EmbedBuilder()
         .setTitle("[خروج عضو]")
@@ -27,4 +28,6 @@ exports.default = new Event_1.Event("guildMemberRemove", (member) => __awaiter(v
     if (yield members_1.Contest.findOne({ memberId: member.id })) {
         yield members_1.Contest.deleteOne({ memberId: member.id });
     }
+    const membersCount = member.guild.memberCount;
+    (_a = member.guild.channels.cache.get("878366062767398952")) === null || _a === void 0 ? void 0 : _a.edit({ name: membersCount.toString() }).catch(console.error);
 }));

@@ -14,7 +14,7 @@ const Command_1 = require("../../structures/Command");
 const index_1 = require("../../index");
 const members_1 = require("../../schema/members");
 exports.default = new Command_1.Command({
-    name: "top-contestants",
+    name: "delete-contestant",
     description: "ترتيب المشاركين بالمسابقات",
     onlyInCommandChannel: false,
     options: [

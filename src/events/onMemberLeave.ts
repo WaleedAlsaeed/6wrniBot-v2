@@ -21,6 +21,9 @@ export default new Event(
         if (await Contest.findOne({ memberId: member.id })) {
             await Contest.deleteOne({ memberId: member.id });
         }
+
+        const membersCount = member.guild.memberCount;
+        member.guild.channels.cache.get("878366062767398952")?.edit({ name: membersCount.toString() }).catch(console.error);
     }
 
 );
