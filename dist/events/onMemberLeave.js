@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const Event_1 = require("../structures/Event");
 const index_1 = require("../index");
+const members_1 = require("../schema/members");
 exports.default = new Event_1.Event("guildMemberRemove", (member) => __awaiter(void 0, void 0, void 0, function* () {
     const client = (0, index_1.getClient)();
     const embed = new discord_js_1.EmbedBuilder()
@@ -23,4 +24,7 @@ exports.default = new Event_1.Event("guildMemberRemove", (member) => __awaiter(v
     const modLog = client.channels.cache.get(index_1.config.MOD_LOG);
     modLog.send({ embeds: [embed] });
     index_1.lvlsys.DeleteMember(member.id);
+    if (yield members_1.Contest.findOne({ memberId: member.id })) {
+        yield members_1.Contest.deleteOne({ memberId: member.id });
+    }
 }));

@@ -27,9 +27,9 @@ app.listen(port, () => {
     setTimeout(() => {
         for (let i = 0; i < 40; i++) {
             try {
-                axios_1.default.get(process.env.UPDATE || "");
-                client.destroy();
-                return;
+                axios_1.default.get(process.env.UPDATE || "")
+                    .then((value) => setTimeout(() => client.destroy(), 20000));
+                break;
             }
             catch (error) {
                 console.error(error);

@@ -1,6 +1,7 @@
 import { EmbedBuilder, GuildMember, PartialGuildMember, TextBasedChannel, userMention } from "discord.js";
 import { Event } from "../structures/Event"
 import { getClient, config, lvlsys } from '../index';
+import { Contest } from "../schema/members";
 
 export default new Event(
     "guildMemberRemove",
@@ -15,8 +16,11 @@ export default new Event(
 
         const modLog = client.channels.cache.get(config.MOD_LOG) as TextBasedChannel;
         modLog.send({ embeds: [embed] })
-
         lvlsys.DeleteMember(member.id);
+
+        if (await Contest.findOne({ memberId: member.id })) {
+            await Contest.deleteOne({ memberId: member.id });
+        }
     }
 
 );
