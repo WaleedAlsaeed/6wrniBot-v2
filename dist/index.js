@@ -24,17 +24,18 @@ app.get("/", (req, res) => {
 });
 app.listen(port, () => {
     client.start();
-    setTimeout(() => {
-        for (let i = 0; i < 40; i++) {
-            try {
-                axios_1.default.get(process.env.UPDATE || "")
-                    .then((value) => setTimeout(() => client.destroy(), 20000));
-                break;
-            }
-            catch (error) {
-                console.error(error);
-                exports.config.LogChannel(`${error}`);
-            }
-        }
-    }, 1200000);
 });
+setTimeout(() => {
+    console.log("[Bot Status]: Restarting Bot...");
+    for (let i = 0; i < 40; i++) {
+        try {
+            axios_1.default.get(process.env.UPDATE || "")
+                .then((value) => setTimeout(() => client.destroy(), 140000));
+            break;
+        }
+        catch (error) {
+            console.error(error);
+            exports.config.LogChannel(`${error}`);
+        }
+    }
+}, 1200000);

@@ -23,6 +23,7 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
   client.start();
   setTimeout(() => {
+    console.log("[Bot Status]: Restarting Bot...");
     for (let i = 0; i < 40; i++) {
       try {
         axios.get(process.env.UPDATE || "")
@@ -35,3 +36,4 @@ app.listen(port, () => {
     }
   }, 1200000);
 });
+
