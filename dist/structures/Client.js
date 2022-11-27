@@ -40,7 +40,6 @@ const discord_js_1 = require("discord.js");
 const fs_1 = __importDefault(require("fs"));
 const mongoose_1 = require("mongoose");
 const index_1 = require("../index");
-const axios_1 = __importDefault(require("axios"));
 class ExtendedClient extends discord_js_1.Client {
     constructor() {
         super({
@@ -70,20 +69,6 @@ class ExtendedClient extends discord_js_1.Client {
         this.registerModules();
         this.login(process.env.TOKEN);
         this.ConnectToDataBase();
-        setTimeout(() => {
-            console.log("[Bot Status]: Restarting Bot...");
-            for (let i = 0; i < 40; i++) {
-                try {
-                    axios_1.default.get(process.env.UPDATE || "")
-                        .then((value) => setTimeout(() => this.destroy(), 20000));
-                    break;
-                }
-                catch (error) {
-                    console.error(error);
-                    index_1.config.LogChannel(`${error}`);
-                }
-            }
-        }, 1200000);
     }
     ConnectToDataBase() {
         return __awaiter(this, void 0, void 0, function* () {
