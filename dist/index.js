@@ -34,7 +34,7 @@ app.get("/", (req, res) => {
 app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
     client.start();
     yield sleep(600000);
-    axios_1.default.get(process.env.UPDATE || "");
+    yield axios_1.default.get(process.env.UPDATE || "");
     yield sleep(20000);
     client.destroy();
 }));

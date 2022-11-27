@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 app.listen(port, async () => {
   client.start();
   await sleep(600000)
-  axios.get(process.env.UPDATE || "")
+  await axios.get(process.env.UPDATE || "")
   await sleep(20000)
   client.destroy();
 });
