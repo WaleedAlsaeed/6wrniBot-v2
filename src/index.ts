@@ -20,16 +20,14 @@ app.get("/", (req, res) => {
   res.status(200).send('OK');
 });
 
-app.listen(port, () => {
+app.listen(port, async () => {
   client.start();
-  update();
+  await sleep(600000)
+  axios.get(process.env.UPDATE || "")
+  await sleep(20000)
+  client.destroy();
 });
 
-function update() {
-  setTimeout(async () => {
-    client.destroy();
-    client = new ExtendedClient();
-    client.start()
-    update();
-  }, 600000);
+function sleep(ms:number){
+  return new Promise(resolve => setTimeout(resolve, ms));
 }

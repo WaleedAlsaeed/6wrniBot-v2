@@ -25,20 +25,19 @@ function getClient() {
 }
 exports.getClient = getClient;
 const express_1 = __importDefault(require("express"));
+const axios_1 = __importDefault(require("axios"));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 5000;
 app.get("/", (req, res) => {
     res.status(200).send('OK');
 });
-app.listen(port, () => {
+app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
     client.start();
-    update();
-});
-function update() {
-    setTimeout(() => __awaiter(this, void 0, void 0, function* () {
-        client.destroy();
-        client = new Client_1.ExtendedClient();
-        client.start();
-        update();
-    }), 600000);
+    yield sleep(600000);
+    axios_1.default.get(process.env.UPDATE || "");
+    yield sleep(20000);
+    client.destroy();
+}));
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
