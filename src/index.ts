@@ -18,11 +18,11 @@ const port = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
   res.status(200).send('OK');
+  update();
 });
 
 app.listen(port, () => {
   client.start();
-  update();
 });
 
 function update() {
@@ -39,5 +39,5 @@ function update() {
         return;
       }
     }   
-  }, 1200000);
+  }, 40000);
 }
