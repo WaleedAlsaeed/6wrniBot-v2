@@ -22,28 +22,28 @@ app.get("/", (req, res) => {
 
 app.listen(port, async () => {
   client.start();
-  
+
 });
 
 async function update() {
-  await sleep(600000)
+  await sleep(1150000)
   console.log("[Bot Status]: Restarting Bot...");
   let done = false;
   while (!done) {
     try {
-      const { data, status} = await axios.get(process.env.UPDATE || "");
+      const { data, status } = await axios.get(process.env.UPDATE || "");
       console.log(data, status);
       done = true;
     } catch (error) {
-      done = false; 
+      done = false;
     }
   }
-  await sleep(20000)
+  await sleep(140000)
   client.destroy();
   console.log("[Bot Status]: Done Restarting Bot...");
 }
 
-function sleep(ms:number){
+function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 

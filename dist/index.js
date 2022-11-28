@@ -36,7 +36,7 @@ app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
 }));
 function update() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield sleep(600000);
+        yield sleep(1150000);
         console.log("[Bot Status]: Restarting Bot...");
         let done = false;
         while (!done) {
@@ -49,7 +49,7 @@ function update() {
                 done = false;
             }
         }
-        yield sleep(20000);
+        yield sleep(140000);
         client.destroy();
         console.log("[Bot Status]: Done Restarting Bot...");
     });
