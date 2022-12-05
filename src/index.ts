@@ -16,13 +16,16 @@ import axios from 'axios';
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.get("/", (req, res) => {
-  res.status(200).send('OK');
+app.get("/", async (req, res) => {
+  if (res.statusCode > 199 && res.statusCode < 400) {
+    res.send('OK');
+  } else {
+    await axios.get(process.env.UPDATE || "");
+  }
 });
 
 app.listen(port, async () => {
   client.start();
-
 });
 
 async function update() {
