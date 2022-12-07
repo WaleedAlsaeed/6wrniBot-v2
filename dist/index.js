@@ -41,20 +41,20 @@ app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
 }));
 function update() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield sleep(1150000);
+        yield sleep(900000);
         console.log("[Bot Status]: Restarting Bot...");
         let done = false;
         while (!done) {
             try {
-                const { data, status } = yield axios_1.default.get(process.env.UPDATE || "");
-                console.log(data, status);
+                const { status } = yield axios_1.default.get(process.env.UPDATE || "");
+                console.log("[Bot Status]: Restarting on progress at port: ", status);
                 done = true;
             }
             catch (error) {
                 done = false;
             }
         }
-        yield sleep(140000);
+        yield sleep(300000);
         client.destroy();
         console.log("[Bot Status]: Done Restarting Bot...");
     });

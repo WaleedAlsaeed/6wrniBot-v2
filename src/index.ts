@@ -29,19 +29,19 @@ app.listen(port, async () => {
 });
 
 async function update() {
-  await sleep(1150000)
+  await sleep(900000)
   console.log("[Bot Status]: Restarting Bot...");
   let done = false;
   while (!done) {
     try {
-      const { data, status } = await axios.get(process.env.UPDATE || "");
-      console.log(data, status);
+      const { status } = await axios.get(process.env.UPDATE || "");
+      console.log("[Bot Status]: Restarting on progress at port: ", status);
       done = true;
     } catch (error) {
       done = false;
     }
   }
-  await sleep(140000)
+  await sleep(300000)
   client.destroy();
   console.log("[Bot Status]: Done Restarting Bot...");
 }
