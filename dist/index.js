@@ -39,27 +39,38 @@ app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
     client.start();
 }));
-function update() {
+function update(a = 0) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield sleep(900000);
-        console.log("[Bot Status]: Restarting Bot...");
-        let done = false;
-        while (!done) {
-            try {
-                const { status } = yield axios_1.default.get(process.env.UPDATE || "");
-                console.log("[Bot Status]: Restarting on progress at port: ", status);
-                done = true;
+        yield sleep(1000000);
+        if (a > 24) {
+            console.log("[Bot Status]: Restarting Bot...");
+            let done = false;
+            while (!done) {
+                try {
+                    const { status } = yield axios_1.default.get(process.env.UPDATE || "");
+                    console.log("[Bot Status]: Restarting on progress at port: ", status);
+                    done = true;
+                }
+                catch (error) {
+                    console.error(error);
+                    done = false;
+                }
             }
-            catch (error) {
-                done = false;
-            }
+            yield sleep(240000);
+            client.destroy();
+            console.log("[Bot Status]: Done Restarting Bot...");
         }
-        yield sleep(300000);
-        client.destroy();
-        console.log("[Bot Status]: Done Restarting Bot...");
+        else {
+            const aa = new Client_1.ExtendedClient();
+            aa.start();
+            yield sleep(30000);
+            client.destroy();
+            client = aa;
+            update(a + 1);
+        }
     });
 }
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-update();
+update(0);
