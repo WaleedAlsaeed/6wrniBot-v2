@@ -38,7 +38,6 @@ app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
     client.start();
-    update();
 }));
 function update() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -60,3 +59,4 @@ function update() {
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+update();
