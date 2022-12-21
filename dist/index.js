@@ -38,10 +38,12 @@ app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
     client.start();
-    update();
+    yield update();
+    console.log("[Bot Status]: Done Restarting the bot");
 }));
 function update() {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log("[Bot Status]: Bot started!");
         yield sleep(1110000);
         let done = false;
         while (!done) {

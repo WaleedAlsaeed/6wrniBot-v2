@@ -26,10 +26,12 @@ app.get("/", async (req, res) => {
 
 app.listen(port, async () => {
   client.start();
-  update();
+  await update();
+  console.log("[Bot Status]: Done Restarting the bot");
 });
 
 async function update() {
+  console.log("[Bot Status]: Bot started!");
   await sleep(1110000)
   let done = false;
   while (!done) {
