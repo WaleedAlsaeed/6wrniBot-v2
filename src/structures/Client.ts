@@ -12,7 +12,6 @@ import fs from 'fs';
 import { connect, connection } from 'mongoose';
 import { RoleButton } from './Button';
 import { config } from '../index';
-import axios from 'axios';
 
 
 export class ExtendedClient extends Client {
